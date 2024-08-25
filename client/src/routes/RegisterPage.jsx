@@ -1,36 +1,30 @@
 import React, { useEffect } from 'react'
-import useAppState from '../store/useAppState';
 import svg from '../assets/stylenest.svg'
 import AuthComponent from '../components/Login/AuthComponent';
 import { ToastContainer, toast } from 'react-toastify';
-
-const submitFunc = async (dat) => {
-  const { email, name, password } = dat;
-  const res = await fetch('/api/auth/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ email, name, password })
-  })
-
-  const data = await res.json();
-
-  if(data.error) {
-    toast.error(data.error)
-  }
-
-  console.log(data);
-}
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
-    const {setPosFalse, setPosTrue} = useAppState();
-    useEffect(() => {
-        setPosFalse();
-        return () => {
-            setPosTrue();
-        }
-    }, []);
+  const navigate = useNavigate();
+
+  const submitFunc = async (dat) => {
+    const { email, name, password } = dat;
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, name, password })
+    })
+  
+    const data = await res.json();
+  
+    if(data.error) {
+      toast.error(data.error)
+    }
+
+    setTimeout(() => navigate('/'), 1000)
+  }
   return (
     <div className='flex justify-center items-center h-screen'>
         <ToastContainer />
