@@ -42,7 +42,6 @@ function App() {
       <div className={pos ? "h-full bg-gray-200 font-noto pb-4" : "h-full bg-gray-200 font-noto"}>
       {pos && <Navbar showCart={setShowCart} />}
       <div className={pos && 'max-w-[1430px] bg-white rounded-md mx-auto pb-12 mt-12 px-8'}>
-        <p>{pos}</p>
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
