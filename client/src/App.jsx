@@ -13,6 +13,7 @@ import CartComponent from "./components/CartComponents.jsx"
 import CheckOutPage from "./routes/CheckOutPage.jsx"
 import MainLayout from "./layouts/MainLayout.jsx"
 import SideLayout from "./layouts/SideLayout.jsx"
+import UserPage from './routes/UserPage.jsx'
 
 
 const queryClient = new QueryClient()
@@ -50,6 +51,7 @@ function App() {
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/authorization" element={<AuthPage />} />
           <Route path="/checkout" element={<CheckOutPage />} />
+          <Route path='/user' element={<UserPage />}/>
         </Route>
       </Routes>
       {showCart && <CartComponent showCart={setShowCart} />}
