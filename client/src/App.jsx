@@ -14,6 +14,8 @@ import CollectionPage from "./routes/CollectionPage.jsx"
 import { useEffect, useState } from "react"
 import CartComponent from "./components/CartComponents.jsx"
 import CheckOutPage from "./routes/CheckOutPage.jsx"
+import MainLayout from "./layouts/MainLayout.jsx"
+import SideLayout from "./layouts/SideLayout.jsx"
 
 
 const queryClient = new QueryClient()
@@ -39,24 +41,22 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className={pos ? "h-full bg-gray-200 font-noto pb-4" : "h-full bg-gray-200 font-noto"}>
-      {pos && <Navbar showCart={setShowCart} />}
-      <div className={pos && 'max-w-[1430px] bg-white rounded-md mx-auto pb-12 mt-12 px-8'}>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
+      <Routes>
+        <Route path='/' element={<MainLayout showCart={setShowCart} />}>
+          <Route index element={<MainPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<ErrorPage />} />
+          <Route path="/latest" element={<LatestPage />} />
+          <Route path="/collection/:name" element={<CollectionPage />} />
+        </Route>
+        <Route element={<SideLayout />}>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
-          <Route path="/latest" element={<LatestPage />} />
           <Route path="/authorization" element={<AuthPage />} />
-          <Route path="/collection/:name" element={<CollectionPage />} />
           <Route path="/checkout" element={<CheckOutPage />} />
-        </Routes>
-        {showCart && <CartComponent showCart={setShowCart}/>}
-        {pos && <Footer />}
-      </div>
-    </div>
+        </Route>
+      </Routes>
+      {showCart && <CartComponent showCart={setShowCart} />}
     </QueryClientProvider>
   )
 }

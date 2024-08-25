@@ -10,7 +10,7 @@ const Navbar = ({ showCart }) => {
             <div className='flex items-center gap-36'>
                 <img src={svg} alt="logoImg" />
                 <div className='flex gap-8'>
-                    <Link to={'/'}>Shop all</Link>
+                    <Link to={'/'}>Collections</Link>
                     <Link to={'/latest'}>Latest Arrivals</Link>
                 </div>
             </div>

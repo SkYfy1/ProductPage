@@ -1,12 +1,13 @@
 import React from 'react'
 import svg from '../assets/stylenest.svg'
+import { Link } from 'react-router-dom'
 
 const FooterNav = () => {
     return (
         <div className='flex justify-between py-12'>
             <div className='w-[400px]'>
                 <img src={svg} alt="logoImg"  className='pb-10'/>
-                <p className='text-sm text-gray-600 '>Craft sdjajda sjidasjkdajsd  sdasdasdasas dadasdas dadasdasdasd asdas.</p>
+                <p className='text-sm text-gray-600 '>Craft your own style.</p>
             </div>
             <ul className='flex text-base flex-col gap-2 flex-2 '>
                 <li className='text-gray-400'>SHOP CATEGORIES</li>
@@ -16,10 +17,9 @@ const FooterNav = () => {
             </ul>
             <ul className='flex text-base flex-col gap-2 flex-2'>
                 <li className='text-gray-400'>SHOP COLLECTIONS</li>
-                <li>Latest arrivals</li>
-                <li>dasdas</li>
-                <li>j21f1sdasf</li>
-                <li>fasfafa</li>
+                <Link to='/latest'>Latest arrivals</Link>
+                <Link to='/'>Collections</Link>
+                <Link to='/about'>About</Link>
             </ul>
         </div>
     )
