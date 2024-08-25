@@ -1,13 +1,10 @@
-import Navbar from "./components/Navbar"
 import { Routes, Route } from 'react-router-dom'
 import MainPage from './routes/MainPage.jsx'
 import ErrorPage from './routes/ErrorPage.jsx'
 import ProductPage from "./routes/ProductPage.jsx"
 import LatestPage from "./routes/LatestPage.jsx"
-import Footer from "./components/Footer.jsx"
 import LoginPage from "./routes/LoginPage.jsx"
 import RegisterPage from "./routes/RegisterPage.jsx"
-import useAppState from "./store/useAppState.jsx"
 import AuthPage from "./routes/AuthPage.jsx"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import CollectionPage from "./routes/CollectionPage.jsx"
@@ -21,7 +18,6 @@ import SideLayout from "./layouts/SideLayout.jsx"
 const queryClient = new QueryClient()
 
 function App() {
-  const { pos } = useAppState();
   const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {

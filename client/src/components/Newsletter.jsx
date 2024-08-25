@@ -14,7 +14,7 @@ const Newsletter = () => {
       </div>
       <div className='flex gap-3'>
         <input className='px-4 py-2 border-gray-400 bg-gray-200 text-gray-500 border rounded-md'  type="text" placeholder='Enter your email'  value={email} onChange={(e) => setEmail(e.target.value)}/>
-        <button className='px-4 bg-blue-800 rounded-md text-white' onClick={() => {
+        <button className='px-4 bg-blue-800 rounded-md text-white hover:bg-blue-900' onClick={() => {
             toast.success('You successfully subscribed to our newsletter')
         }}>Subscribe</button>
       </div>
