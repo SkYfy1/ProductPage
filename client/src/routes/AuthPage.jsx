@@ -9,13 +9,6 @@ const AuthPage = () => {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
   const [showMore, setShowMore] = useState(false);
-  const { setPosFalse, setPosTrue } = useAppState();
-  useEffect(() => {
-    setPosFalse();
-    return () => {
-      setPosTrue();
-    }
-  }, []);
 
   const auth = async (email) => {
       const res = await fetch('/api/auth', {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import QuantityInput from './QuantityInput.jsx'
 import ProductDesc from './ProductDesc.jsx'
 import useCartStore from '../store/useCartStore.jsx';
@@ -18,11 +18,13 @@ const ProductInfo = ({ prod }) => {
 
     const { cart, addToCart } = useCartStore();
 
+    const price = prod.price - (prod.price * 20 / 100)
+
     return (
         <div>
             <h1 className='text-4xl font-medium tracking-wide mb-3'>{prod.name}</h1>
             <div className='flex gap-1 items-center'>
-                <h3 className=' text-slate-600 text-lg font-medium'>{prod.price}$</h3>
+                <h3 className=' text-slate-600 text-lg font-medium'>{price}$</h3>
                 <h3 className=' text-slate-400 text-base line-through font-light self-end'>{prod.price}$</h3>
             </div>
             <div className='text-xs inline-block p-1 mt-1 bg-yellow-100 text-orange-700 border border-yellow-200 rounded-full'>20% OFF</div>
