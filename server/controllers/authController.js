@@ -1,4 +1,7 @@
 import userModel from "../models/user.js";
+import jwt from 'jsonwebtoken'
+import hashPassword from '../helpers/hash.js'
+import bcrypt from 'bcrypt'
 
 const findUser = async (req, res) => {
     const { email } = req.body;
@@ -32,8 +35,10 @@ const registerUser = async (req, res) => {
         })
     }
 
+    const pass = await hashPassword(password)
+
     const user = await userModel.create({
-        name, email, password
+        name, email, password: pass
     })
 
     res.json(user)
@@ -53,7 +58,10 @@ const loginUser = async (req, res) => {
         })
     }
 
-    if (user.password != password) {
+    const compare = bcrypt.compare(password, user.password);
+
+
+    if (compare) {
         return res.status(401).json({
             error: "Wrong password"
         })

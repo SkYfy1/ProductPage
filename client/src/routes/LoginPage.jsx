@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import svg from '../assets/stylenest.svg'
 import { ToastContainer } from 'react-toastify';
 import AuthComponent from '../components/Login/AuthComponent';
@@ -9,7 +9,7 @@ import { useAuthStore } from '../store/useAuthStore';
 const LoginPage = () => {
     const navigate = useNavigate();
     const setUser = useAuthStore((state) => state.setUser);
-    const submitFunc = async (dat) => {
+    const submitFunc = useCallback(async (dat) => {
         const { email, password } = dat;
         const res = await fetch('/api/auth/login', {
             method: 'post',
@@ -26,7 +26,7 @@ const LoginPage = () => {
         }
         setUser(data);
         navigate('/');
-    }
+    }, [])
     return (
         <div className='flex justify-center items-center h-screen'>
             <ToastContainer />
