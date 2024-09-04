@@ -35,8 +35,8 @@ const Navbar = ({ showCart }) => {
                         <button onClick={() => auth.setUser(null)}>Log Out</button>
                     </div> :
                     <div>
-                        <Link to={'/authorization'} className='px-4 py-2 text-base  text-gray-700 rounded-md'>Log in</Link>
-                        <Link to={'/authorization'} className='px-4 py-2 text-base ml-2 bg-gray-300 text-gray-700 rounded-md'>Sign up for free</Link>
+                        <Link to={'/authorization'} className='px-4 py-2 text-base  text-gray-700 rounded-md hover:bg-gray-300 transition-all duration-300 ease-in'>Log in</Link>
+                        <Link to={'/authorization'} className='px-4 py-2 text-base ml-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-all duration-300 ease-in'>Sign up for free</Link>
                     </div>}
             </div>
         </nav>

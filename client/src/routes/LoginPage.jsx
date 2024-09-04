@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react'
 import svg from '../assets/stylenest.svg'
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import AuthComponent from '../components/Login/AuthComponent';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
@@ -22,8 +22,10 @@ const LoginPage = () => {
         const data = await res.json();
     
         if (data.error) {
-            toast.error(data.error)
+            toast.error(data.error);
+            return;
         }
+
         setUser(data);
         navigate('/');
     }, [])
