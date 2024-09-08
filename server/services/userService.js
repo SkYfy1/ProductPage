@@ -24,7 +24,7 @@ class userService {
         const activationLink = uuid.v4();
 
         const user = await UserModel.create({
-            name, email, password: hashedPassword
+            name, email, password: hashedPassword, activationLink
         });
         await mService.sendMail(email, activationLink);
 
@@ -42,3 +42,9 @@ class userService {
 
     }
 }
+
+const uService = new userService();
+
+const hello = 'mewo'
+
+export default hello;

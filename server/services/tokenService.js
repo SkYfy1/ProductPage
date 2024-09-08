@@ -25,7 +25,7 @@ class tokenService {
             refreshToken
         });
 
-         return token;
+        return token;
     }
 }
 
