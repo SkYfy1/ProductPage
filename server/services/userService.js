@@ -3,6 +3,7 @@ import hashPassword from "../helpers/hash.js";
 import mService from "./mailService.js";
 import tService from "./tokenService.js";
 import userDto from "../dtos/userDto.js";
+import { v4 as uuidv4 } from 'uuid';
 
 class userService {
     async register(name, email, password) {
@@ -21,7 +22,7 @@ class userService {
         }
 
         const hashedPassword = await hashPassword(password);
-        const activationLink = uuid.v4();
+        const activationLink = uuidv4();
 
         const user = await UserModel.create({
             name, email, password: hashedPassword, activationLink
@@ -29,7 +30,7 @@ class userService {
         await mService.sendMail(email, activationLink);
 
         const user_Dto = new userDto(user);
-        const tokens = tService.generateTokens({ ...user_Dto });
+        const tokens = await tService.generateTokens({ ...user_Dto });
         await tService.saveToken(user_Dto.id, tokens.refreshToken);
 
         return {
@@ -45,6 +46,4 @@ class userService {
 
 const uService = new userService();
 
-const hello = 'mewo'
-
-export default hello;
+export default uService;

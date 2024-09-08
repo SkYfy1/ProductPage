@@ -15,10 +15,15 @@ class tokenService {
     async saveToken(id, refreshToken) {
         const tokenData = await tokenModel.find({ user: id });
 
-        if(tokenData) {
-            tokenData.refreshToken = refreshToken;
-            return tokenData.save()
-        }
+        // Refresh token update for logining
+
+        // if (tokenData) {
+        //     // tokenData.refreshToken = refreshToken;
+        //     // return tokenData.save(function(){})
+        //     tokenModel.updateOne({ user: id }, {
+        //         "refreshToken": refreshToken
+        //     })
+        // }
 
         const token = await tokenModel.create({
             user: id,
