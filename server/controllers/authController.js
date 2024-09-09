@@ -1,7 +1,4 @@
 import userModel from "../models/user.js";
-import jwt from 'jsonwebtoken'
-import hashPassword from '../helpers/hash.js'
-import bcrypt from 'bcrypt'
 import uService from "../services/userService.js";
 
 const findUser = async (req, res) => {
@@ -18,61 +15,88 @@ const findUser = async (req, res) => {
     res.json(exist)
 }
 
+// if (!password || password.length < 6) {
+//     return res.json({
+//         error: 'Password is required or should be at least 6 characters'
+//     })
+// }
 
-const registerUser = async (req, res) => {
-    const { email, name, password } = req.body;
+// if (!name) {
+//     res.json({
+//         error: 'Name is required'
+//     })
+// }
 
-    console.log(req.body)
+// const pass = await hashPassword(password)
 
-    // if (!password || password.length < 6) {
-    //     return res.json({
-    //         error: 'Password is required or should be at least 6 characters'
-    //     })
-    // }
+// const user = await userModel.create({
+//     name, email, password: pass
+// })
 
-    // if (!name) {
-    //     res.json({
-    //         error: 'Name is required'
-    //     })
-    // }
+const registerUser = async (req, res, next) => {
+    try {
+        const { email, name, password } = req.body;
 
-    // const pass = await hashPassword(password)
+        console.log(req.body)
 
-    // const user = await userModel.create({
-    //     name, email, password: pass
-    // })
+        const user = await uService.register(name, email, password);
 
-    const user = await uService.register(name, email, password)
-
-    res.json(user)
+        res.cookie('refreshToken', user.refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true
+        });
+        return res.json(user)
+    } catch (e) {
+        next(e)
+    }
 }
 
 
-const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+// const user = await userModel.findOne({
+//         email
+//     })
 
-    const user = await userModel.findOne({
-        email
-    })
+//     if(!user) {
+//         return res.status(400).json({
+//             error: 'Not found acc with this email'
+//         })
+//     }
 
-    if(!user) {
-        return res.status(400).json({
-            error: 'Not found acc with this email'
-        })
+//     const compare = bcrypt.compare(password, user.password);
+
+
+//     if (!compare) {
+//         return res.status(401).json({
+//             error: "Wrong password"
+//         })
+//     }
+
+
+
+const loginUser = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = uService.login(email, password);
+        res.cookie('refreshToken', user.refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true
+        });
+
+        return res.json(user);
+    } catch (e) {
+        next(e)
     }
-
-    const compare = bcrypt.compare(password, user.password);
-
-
-    if (!compare) {
-        return res.status(401).json({
-            error: "Wrong password"
-        })
-    }
-
-    res.json(user);
 };
 
+const logout = async (req, res, next) => {
+    try {
+        
+    } catch (e) {
+        next(e)
+    }
+}
+
 export {
-    findUser, registerUser, loginUser
+    findUser, registerUser, loginUser, logout
 }

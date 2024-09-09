@@ -2,8 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import { mongoose } from 'mongoose';
 import router from './routes/ShopRoute.js';
-import ProductModel from './models/product.js';
-import AuthRouter from './routes/authRoute.js'
+import AuthRouter from './routes/authRoute.js';
+import cookieParser from 'cookie-parser';
+import errorMiddleware from './middleware/error-middleware.js';
 
 const app = express();
 const url = process.env.URL;
@@ -16,6 +17,7 @@ app.use(cors({
     credentials: true,
     origin: 'http://localhost:5173'
 }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -26,6 +28,7 @@ mongoose.connect(url).then(() => {
 app.use('/', router);
 
 app.use('/auth', AuthRouter);
+app.use(errorMiddleware);
 
 app.listen(port, async () => {
     console.log('meow');
