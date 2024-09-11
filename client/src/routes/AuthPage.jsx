@@ -48,7 +48,7 @@ const AuthPage = () => {
           </div>
           <div className='relative'>
             <div className='border-b border-gray-300 my-10'></div>
-            <span className='absolute -bottom-3 left-[199px] z-30 bg-white w-10 text-center'>or</span>
+            <span className='absolute -bottom-3 left-1/2 -translate-x-2/3 z-30 bg-white w-10 text-center'>or</span>
           </div>
           <div className='flex flex-col gap-1'>
             <button className='w-full rounded border border-gray-400 mb-3 text-base  text-gray-600 py-5 flex justify-center gap-2'>

@@ -6,6 +6,7 @@ import userDto from "../dtos/userDto.js";
 import { v4 as uuidv4 } from 'uuid';
 import ApiError from "../exceptions/api-error.js";
 import bcrypt from 'bcrypt'
+import userModel from "../models/user.js";
 
 class userService {
     async register(name, email, password) {
@@ -42,26 +43,49 @@ class userService {
     }
 
     async login(email, password) {
-        const user = await UserModel.findOne({
-            email
-        })
+        const user = await UserModel.findOne({email})
     
         if(!user) {
-            // return res.status(400).json({
-            //     error: 'Not found acc with this email'
-            // })
-            throw ApiError.BadRequest('Not found acc with this email')
+            throw ApiError.BadRequest('Not found account with this email')
         }
     
-        const compare = bcrypt.compare(password, user.password);
+        const isPassEquals = bcrypt.compare(password, user.password);
     
     
-        if (!compare) {
-            // return res.status(401).json({
-            //     error: "Wrong password"
-            // })
+        if (!isPassEquals) {
             throw ApiError.BadRequest('Wrong password')
         }
+
+        const user_Dto = new userDto(user);
+
+        const tokens = await tService.generateTokens({ ...user_Dto });
+        await tService.saveToken(user_Dto.id, tokens.refreshToken);
+
+
+        return {
+            user_Dto,
+            ...tokens
+        }
+    }
+
+    async logout(refreshToken) {
+        const token = await tService.removeToken(refreshToken);
+        return token;
+    }
+
+    async refresh(refreshToken) {
+        if(!refreshToken) {
+            throw ApiError.UnauthorizedError();
+        }
+
+        const userData = tService.validateRefreshToken(refreshToken);
+        const tokenFromDb = await tService.findToken(refreshToken);
+
+        if(!userData || !tokenFromDb) {
+            throw ApiError.UnauthorizedError();
+        }
+
+        const user = await userModel.findById(userData.id);
 
         const user_Dto = new userDto(user);
 

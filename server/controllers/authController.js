@@ -1,5 +1,7 @@
 import userModel from "../models/user.js";
 import uService from "../services/userService.js";
+import { validationResult } from "express-validator";
+import ApiError from "../exceptions/api-error.js";
 
 const findUser = async (req, res) => {
     const { email } = req.body;
@@ -35,11 +37,20 @@ const findUser = async (req, res) => {
 
 const registerUser = async (req, res, next) => {
     try {
+        const errors = validationResult(req)
+
+        if (!errors.isEmpty()) {
+            return next(ApiError.BadRequest(
+                'Ошибка валидации', errors.array()
+            ))
+        }
         const { email, name, password } = req.body;
 
         console.log(req.body)
 
         const user = await uService.register(name, email, password);
+
+        console.log('User refreshToken:', user.refreshToken);
 
         res.cookie('refreshToken', user.refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -77,7 +88,12 @@ const loginUser = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
-        const user = uService.login(email, password);
+        const user = await uService.login(email, password);
+
+        console.log('User refreshToken:', user.refreshToken);
+
+        console.log(user)
+
         res.cookie('refreshToken', user.refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
             httpOnly: true
@@ -91,9 +107,30 @@ const loginUser = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
     try {
-        
+        const { refreshToken } = req.cookies;
+        console.log(refreshToken)
+        const token = await uService.logout(refreshToken);
+        res.clearCookie('refreshToken');
+        return res.json(token);
     } catch (e) {
         next(e)
+    }
+}
+
+const refresh = async (req, res, next) => {
+    try {
+        const { refreshToken } = req.cookies;
+
+        const user = await uService.refresh(refreshToken);
+
+        res.cookie('refreshToken', user.refreshToken, {
+            maxAge: 30 * 24 * 60 * 60 * 1000,
+            httpOnly: true
+        });
+
+        return res.json(user);
+    } catch (error) {
+        next(error)
     }
 }
 

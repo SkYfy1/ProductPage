@@ -7,7 +7,19 @@ import { useAuthStore } from '../store/useAuthStore'
 const Navbar = ({ showCart }) => {
     const auth = useAuthStore()
     const cart = useCartStore((state) => state.cart);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const logout = async () => {
+        const logout = await fetch('/api/auth/logout');
+
+        if (!logout.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        const data = await logout.json();
+
+        console.log(data);
+        auth.setUser(null);
+    }
     return (
         <nav className='mx-auto pt-10 flex items-center justify-between max-w-[1430px]'>
             <div className='flex items-center gap-36'>
@@ -32,7 +44,7 @@ const Navbar = ({ showCart }) => {
                 </div>
                 {auth.user ?
                     <div>
-                        <button onClick={() => auth.setUser(null)}>Log Out</button>
+                        <button onClick={logout}>Log Out</button>
                     </div> :
                     <div>
                         <Link to={'/authorization'} className='px-4 py-2 text-base  text-gray-700 rounded-md hover:bg-gray-300 transition-all duration-300 ease-in'>Log in</Link>
