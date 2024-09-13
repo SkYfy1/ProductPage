@@ -12,11 +12,12 @@ const url = process.env.URL;
 // Before make an path, type which file do you need to get and send in this request
 
 const port = process.env.PORT;
+// {
+//     credentials: true,
+//     origin: 'http://localhost:5173'
+// }
 
-app.use(cors({
-    credentials: true,
-    origin: 'http://localhost:5173'
-}));
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

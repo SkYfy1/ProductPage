@@ -98,6 +98,16 @@ class userService {
             ...tokens
         }
     }
+
+    async getUsers() {
+        const users = await userModel.find({});
+
+        if(!users) {
+            throw ApiError.BadRequest('No registered users')
+        }
+
+        return users;
+    }
 }
 
 const uService = new userService();

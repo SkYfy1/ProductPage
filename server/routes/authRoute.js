@@ -1,6 +1,7 @@
-import { findUser, registerUser, loginUser, logout } from '../controllers/authController.js'
+import { findUser, registerUser, loginUser, logout, refresh, getUsers } from '../controllers/authController.js'
 import express from 'express'
 import { body } from 'express-validator';
+import authMiddleware from '../middleware/auth-middleware.js'
 
 const AuthRouter = express.Router();
 
@@ -11,5 +12,9 @@ AuthRouter.post('/register', body('email').isEmail(), body('password').isLength(
 AuthRouter.post('/login', loginUser)
 
 AuthRouter.get('/logout', logout)
+
+AuthRouter.get('/refresh' , refresh)
+
+AuthRouter.get('/users', authMiddleware, getUsers)
 
 export default AuthRouter;

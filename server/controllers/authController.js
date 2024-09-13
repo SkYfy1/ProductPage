@@ -134,6 +134,15 @@ const refresh = async (req, res, next) => {
     }
 }
 
+const getUsers = async (req, res, next) => {
+    try {
+        const users = await uService.getUsers();
+        res.json(users);
+    } catch (error) {
+        next(error)
+    }
+}
+
 export {
-    findUser, registerUser, loginUser, logout
+    findUser, registerUser, loginUser, logout, refresh, getUsers
 }
