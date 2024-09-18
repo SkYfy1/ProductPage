@@ -14,12 +14,20 @@ import CheckOutPage from "./routes/CheckOutPage.jsx"
 import MainLayout from "./layouts/MainLayout.jsx"
 import SideLayout from "./layouts/SideLayout.jsx"
 import UserPage from './routes/UserPage.jsx'
+import { useAuthStore } from './store/useAuthStore.jsx'
 
 
 const queryClient = new QueryClient()
 
 function App() {
   const [showCart, setShowCart] = useState(false);
+  const AuthStore = useAuthStore();
+
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+      AuthStore.checkAuth()
+    }
+  }, [])
 
   useEffect(() => {
     function stopScroll(e) {

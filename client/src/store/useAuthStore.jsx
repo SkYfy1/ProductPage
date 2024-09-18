@@ -1,27 +1,31 @@
 import { create } from 'zustand'
 import AuthService from '../services/AuthService';
+import axios from 'axios';
 
 const useAuthStore = create((set) => ({
     user: null,
     isAuth: false,
+    isLoading: false,
     setAuth: (bool) => set({ isAuth: bool }),
     setUser: (newUser) => set({ user: newUser }),
+    setIsLoading: (value) => set({ isLoading: value }),
 
     login: async (email, password) => {
         try {
             const response = await AuthService.login(email, password);
             localStorage.setItem('token', response.data.accessToken);
-            set({ isAuth: true, user: response.data.user })
+            console.log(response.data.user_Dto)
+            set({ isAuth: true, user: response.data.user_Dto })
         } catch (e) {
             console.log(e.response?.data?.message);
         }
     },
 
-    registration: async (email, password) => {
+    registration: async (email, name, password) => {
         try {
-            const response = await AuthService.registration(email, password);
+            const response = await AuthService.registration(email, name, password);
             localStorage.setItem('token', response.data.accessToken);
-            set({ isAuth: true, user: response.data.user })
+            set({ isAuth: true, user: response.data.user_Dto })
         } catch (e) {
             console.log(e.response?.data?.message);
         }
@@ -34,6 +38,21 @@ const useAuthStore = create((set) => ({
             set({ isAuth: false, user: null })
         } catch (e) {
             console.log(e.response?.data?.message);
+        }
+    },
+
+    checkAuth: async () => {
+        set({ isLoading: true })
+        try {
+            const response = await axios.get('http://localhost:8080/auth/refresh', {
+                withCredentials: true
+            });
+            localStorage.setItem('token', response.data.accessToken);
+            set({ isAuth: true, user: response.data.user_Dto })
+        } catch (e) {
+            console.log(e.response?.data?.message);
+        } finally {
+            set({ isLoading: false })
         }
     }
 }));

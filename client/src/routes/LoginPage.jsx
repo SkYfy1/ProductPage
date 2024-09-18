@@ -4,29 +4,33 @@ import { ToastContainer, toast } from 'react-toastify';
 import AuthComponent from '../components/Login/AuthComponent';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
+import AuthService from '../services/AuthService';
 
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const setUser = useAuthStore((state) => state.setUser);
+    // const setUser = useAuthStore((state) => state.setUser);
+    const store = useAuthStore();
     const submitFunc = useCallback(async (dat) => {
         const { email, password } = dat;
-        const res = await fetch('/api/auth/login', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        })
-    
-        const data = await res.json();
-    
-        if (data.error) {
-            toast.error(data.error);
-            return;
-        }
+        // const res = await fetch('/api/auth/login', {
+        //     method: 'post',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ email, password })
+        // })
 
-        setUser(data);
+        // const data = await res.json();
+    
+        // if (data.error) {
+        //     toast.error(data.error);
+        //     return;
+        // }
+
+        // setUser(data);
+
+        await store.login(email, password);
         navigate('/');
     }, [])
     return (

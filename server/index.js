@@ -17,7 +17,10 @@ const port = process.env.PORT;
 //     origin: 'http://localhost:5173'
 // }
 
-app.use(cors());
+app.use(cors({
+        credentials: true,
+        origin: 'http://localhost:5173'
+    }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
