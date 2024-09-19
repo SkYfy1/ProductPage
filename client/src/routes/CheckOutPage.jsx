@@ -4,6 +4,7 @@ import useCart from '../hooks/useCart';
 import delivery from '../data/delivery';
 import DeliveryForm from '../components/DeliveryForm';
 import { Link } from 'react-router-dom';
+import { useAuthStore } from '../store/useAuthStore';
 
 
 
@@ -12,10 +13,13 @@ const opt = 'flex justify-between my-2 border border-blue-400 p-6 rounded'
 
 const CheckOutPage = () => {
     const { isLoading, cartItems } = useCart();
-    const [option, setOption] = useState();
+    const [option, setOption] = useState(delivery[0]);
     const [payment, setPayment] = useState("Payment upon receipt");
+    const user = useAuthStore((state) => state.user);
+    const [deliveryData, setDeliveryData] = useState({});
 
-    const totalPrice = cartItems.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0);
+    const cartPrice = cartItems.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0);
+    const totalPrice = cartPrice + option.price
 
     return (
         <div className='ml-24 py-8 px-24 min-h-screen max-h-fit container'>
@@ -26,7 +30,7 @@ const CheckOutPage = () => {
             <div className='flex gap-12'>
                 <div className='w-full'>
                     <div className='flex flex-col gap-4 my-3'>
-                        <h1 className='text-3xl font-semibold'>Checkout</h1>
+                        <h1 className='text-3xl font-semibold'>Checkout {user.email}</h1>
                         <p className='text-lg font-semibold'>Order №{Math.ceil(Math.random()*100)}</p>
                     </div>
                     <div className='p-5 border border-gray-400 rounded'>
@@ -54,12 +58,12 @@ const CheckOutPage = () => {
                     <div>
                         <h1 className='text-lg font-semibold my-3'>Delivery</h1>
                         {delivery.map((item) => (
-                            <div key={item.name} className={`flex justify-between my-2 p-5 ${option === item.name && 'border border-blue-400 p-6 rounded'}`}>
+                            <div key={item.name} className={`flex justify-between my-2 p-5 ${option.name === item.name && 'border border-blue-400 p-6 rounded'}`}>
                                 <div>
-                                    <input className='mr-2' type="radio" value={item.name} checked={option === item.name} onChange={(e) => setOption(e.target.value)}/>
+                                    <input className='mr-2' type="radio" value={item.name} checked={option.name === item.name} onChange={() => setOption(item)}/>
                                     Pickup from the {item.name} post office
                                 </div>
-                                <div>{item.price}</div>
+                                <div>{item.price} $</div>
                                 <div>{item.time}</div>
                             </div>
                         ))}
@@ -74,7 +78,7 @@ const CheckOutPage = () => {
                     </div>
                     <div>
                         <h1 className='text-lg font-semibold my-3'>Receiver</h1>
-                        <DeliveryForm />
+                        <DeliveryForm sData={(data) => setDeliveryData(data)}/>
                     </div>
                     <p className='text-sm mt-10'>© 2001–2024 Интернет-магазин «StyleNest» — Щоразу що треба</p>
                 </div>

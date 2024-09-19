@@ -2,6 +2,7 @@ import userModel from "../models/user.js";
 import uService from "../services/userService.js";
 import { validationResult } from "express-validator";
 import ApiError from "../exceptions/api-error.js";
+import mService from "../services/mailService.js";
 
 const findUser = async (req, res) => {
     const { email } = req.body;
@@ -151,6 +152,12 @@ const activate = async (req, res, next) => {
     res.redirect(process.env.CLIENT_URL);
 }
 
+const orderConfirmation = async (req, res, next) => {
+    const orderData = req.body;
+
+    await mService.orderConfirmation(orderData.email, orderData)
+}
+
 export {
-    findUser, registerUser, loginUser, logout, refresh, getUsers, activate
+    findUser, registerUser, loginUser, logout, refresh, getUsers, activate, orderConfirmation
 }

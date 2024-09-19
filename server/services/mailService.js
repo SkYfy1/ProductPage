@@ -45,6 +45,22 @@ class mailService {
                 `
         })
     }
+
+    async orderConfirmation(to, orderData) {
+        await this.transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to,
+            subject: 'Спасибо за заказ на StyleNest',
+            text: '',
+            html:
+                `
+                    <div>
+                        <h1>Ваш заказ:</h1>
+                        <h1>${orderData}</h1>
+                    </div>
+                `
+        })
+    }
 }
 
 const mService = new mailService();
