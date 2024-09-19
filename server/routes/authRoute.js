@@ -1,4 +1,4 @@
-import { findUser, registerUser, loginUser, logout, refresh, getUsers } from '../controllers/authController.js'
+import { findUser, registerUser, loginUser, logout, refresh, getUsers, activate } from '../controllers/authController.js'
 import express from 'express'
 import { body } from 'express-validator';
 import authMiddleware from '../middleware/auth-middleware.js'
@@ -14,6 +14,8 @@ AuthRouter.post('/login', loginUser)
 AuthRouter.get('/logout', logout)
 
 AuthRouter.get('/refresh' , refresh)
+
+AuthRouter.get('/activate/:id', activate)
 
 AuthRouter.get('/users', authMiddleware, getUsers)
 

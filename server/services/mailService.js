@@ -29,6 +29,22 @@ class mailService {
                 `
         })
     }
+
+    async afterActivation(to) {
+        await this.transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to,
+            subject: 'Спасибо за активацию аккаунта на StyleNest',
+            text: '',
+            html:
+                `
+                    <div>
+                        <h1>Спасибо за активацию аккаунта</h1>
+                        <h1>${to}</h1>
+                    </div>
+                `
+        })
+    }
 }
 
 const mService = new mailService();

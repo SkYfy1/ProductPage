@@ -30,7 +30,7 @@ class userService {
         const user = await UserModel.create({
             name, email, password: hashedPassword, activationLink
         });
-        // await mService.sendMail(email, `${process.env.API_URL}/auth/activate${activationLink}`);
+        await mService.sendMail(email, `${process.env.API_URL}/auth/activate/${activationLink}`);
 
         const user_Dto = new userDto(user);
         const tokens = await tService.generateTokens({ ...user_Dto });
@@ -107,6 +107,22 @@ class userService {
         }
 
         return users;
+    }
+
+    async activateUser(activationLink) {
+        const userData = await userModel.findOne({ activationLink });
+
+        if(!userData) {
+            throw ApiError.UnauthorizedError();
+        } else {
+            userData.isActivated = true;
+            await userData.save();
+        };
+
+        console.log(userData.email)
+
+        await mService.afterActivation(userData.email)
+        return;
     }
 }
 

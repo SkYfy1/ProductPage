@@ -143,6 +143,14 @@ const getUsers = async (req, res, next) => {
     }
 }
 
+const activate = async (req, res, next) => {
+    const link = req.params.id;
+
+    await uService.activateUser(link);
+
+    res.redirect(process.env.CLIENT_URL);
+}
+
 export {
-    findUser, registerUser, loginUser, logout, refresh, getUsers
+    findUser, registerUser, loginUser, logout, refresh, getUsers, activate
 }
