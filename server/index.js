@@ -5,6 +5,7 @@ import router from './routes/ShopRoute.js';
 import AuthRouter from './routes/authRoute.js';
 import cookieParser from 'cookie-parser';
 import errorMiddleware from './middleware/error-middleware.js';
+import OrderRouter from './routes/OrderRoute.js';
 
 const app = express();
 const url = process.env.URL;
@@ -33,6 +34,7 @@ app.use('/', router);
 
 app.use('/auth', AuthRouter);
 app.use(errorMiddleware);
+app.use('/user', OrderRouter);
 
 app.listen(port, async () => {
     console.log('meow');

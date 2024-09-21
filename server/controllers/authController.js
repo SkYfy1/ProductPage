@@ -165,8 +165,6 @@ const orderConfirmation = async (req, res, next) => {
         user, delivery, payment, receiver: receiverData, email, totalPrice, items, time: date
     })
 
-    console.log(orderData)
-
     res.json({ message: 'Order Placed' })
 }
 

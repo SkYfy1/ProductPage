@@ -3,10 +3,15 @@ import svg from '../assets/stylenest.svg'
 import useCart from '../hooks/useCart';
 import delivery from '../data/delivery';
 import DeliveryForm from '../components/DeliveryForm';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import $api from '../http';
 import axios from 'axios';
+
+const options = {
+    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    timeZoneName: 'long'
+}
 
 
 
@@ -19,6 +24,7 @@ const CheckOutPage = () => {
     const [payment, setPayment] = useState("Payment upon receipt");
     const user = useAuthStore((state) => state.user);
     const [deliveryData, setDeliveryData] = useState({});
+    const navigate = useNavigate()
 
     const cartPrice = cartItems.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0);
     const totalPrice = cartPrice + option.price
@@ -26,7 +32,9 @@ const CheckOutPage = () => {
     async function placeOrder(obj) {
         console.log(obj)
         const data = await axios.post('http://localhost:8080/auth/confirmOrder', obj);
-        console.log(data);
+        if (data.status == '200') {
+            navigate('/')
+        }
     }
 
     return (
@@ -120,7 +128,7 @@ const CheckOutPage = () => {
                                 <div className='text-lg font-semibold'>{totalPrice} $</div>
                             </div>
                         </div>
-                        <button onClick={() => placeOrder({ delivery: option.name, payment, receiverData: deliveryData, email: user.email, user: user.id, totalPrice, items: cartItems, date: new Date() })}
+                        <button onClick={() => placeOrder({ delivery: option.name, payment, receiverData: deliveryData, email: user.email, user: user.id, totalPrice, items: cartItems, date: new Date().toLocaleDateString('en-US', options) })}
                             className=' w-full rounded hover:bg-blue-900 text-base mb-3 bg-blue-800 text-white p-3'>Purchase
                         </button>
                         <div className='text-xs flex flex-col gap-3 text-gray-500'>
