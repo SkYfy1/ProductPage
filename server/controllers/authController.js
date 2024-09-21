@@ -3,6 +3,7 @@ import uService from "../services/userService.js";
 import { validationResult } from "express-validator";
 import ApiError from "../exceptions/api-error.js";
 import mService from "../services/mailService.js";
+import orderModel from "../models/order.js";
 
 const findUser = async (req, res) => {
     const { email } = req.body;
@@ -153,9 +154,20 @@ const activate = async (req, res, next) => {
 }
 
 const orderConfirmation = async (req, res, next) => {
-    const orderData = req.body;
+    const { delivery, email, items, payment, receiverData, totalPrice, user, date } = req.body;
 
-    await mService.orderConfirmation(orderData.email, orderData)
+    // console.log(orderData)
+    // console.log('meow')
+
+    // await mService.orderConfirmation(orderData.email, orderData);
+
+    const orderData = await orderModel.create({
+        user, delivery, payment, receiver: receiverData, email, totalPrice, items, time: date
+    })
+
+    console.log(orderData)
+
+    res.json({ message: 'Order Placed' })
 }
 
 export {

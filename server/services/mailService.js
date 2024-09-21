@@ -54,10 +54,30 @@ class mailService {
             text: '',
             html:
                 `
+                <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <style type="text/css">
+            
+    </style>
+  </head>
+  <body>
+    <main>
                     <div>
                         <h1>Ваш заказ:</h1>
-                        <h1>${orderData}</h1>
-                    </div>
+                            <div>Product name:${orderData.order[0].name}</div>
+                            <div style="color: red">Quantity: ${orderData.order[0].quantity}</div>
+                        <h1>Total: ${orderData.totalPrice}</h1>
+                    </div> 
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
                 `
         })
     }

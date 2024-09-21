@@ -17,7 +17,7 @@ AuthRouter.get('/refresh' , refresh)
 
 AuthRouter.get('/activate/:id', activate)
 
-AuthRouter.get('/confirmOrder', orderConfirmation)
+AuthRouter.post('/confirmOrder', orderConfirmation)
 
 AuthRouter.get('/users', authMiddleware, getUsers)
 

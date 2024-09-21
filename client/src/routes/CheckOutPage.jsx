@@ -5,6 +5,8 @@ import delivery from '../data/delivery';
 import DeliveryForm from '../components/DeliveryForm';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
+import $api from '../http';
+import axios from 'axios';
 
 
 
@@ -21,6 +23,12 @@ const CheckOutPage = () => {
     const cartPrice = cartItems.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0);
     const totalPrice = cartPrice + option.price
 
+    async function placeOrder(obj) {
+        console.log(obj)
+        const data = await axios.post('http://localhost:8080/auth/confirmOrder', obj);
+        console.log(data);
+    }
+
     return (
         <div className='ml-24 py-8 px-24 min-h-screen max-h-fit container'>
             <Link to='/' className='border-b border-gray-300 pb-8'>
@@ -31,7 +39,7 @@ const CheckOutPage = () => {
                 <div className='w-full'>
                     <div className='flex flex-col gap-4 my-3'>
                         <h1 className='text-3xl font-semibold'>Checkout {user.email}</h1>
-                        <p className='text-lg font-semibold'>Order №{Math.ceil(Math.random()*100)}</p>
+                        <p className='text-lg font-semibold'>Order №{Math.ceil(Math.random() * 100)}</p>
                     </div>
                     <div className='p-5 border border-gray-400 rounded'>
                         {cartItems.map((item) => (
@@ -60,7 +68,7 @@ const CheckOutPage = () => {
                         {delivery.map((item) => (
                             <div key={item.name} className={`flex justify-between my-2 p-5 ${option.name === item.name && 'border border-blue-400 p-6 rounded'}`}>
                                 <div>
-                                    <input className='mr-2' type="radio" value={item.name} checked={option.name === item.name} onChange={() => setOption(item)}/>
+                                    <input className='mr-2' type="radio" value={item.name} checked={option.name === item.name} onChange={() => setOption(item)} />
                                     Pickup from the {item.name} post office
                                 </div>
                                 <div>{item.price} $</div>
@@ -78,7 +86,7 @@ const CheckOutPage = () => {
                     </div>
                     <div>
                         <h1 className='text-lg font-semibold my-3'>Receiver</h1>
-                        <DeliveryForm sData={(data) => setDeliveryData(data)}/>
+                        <DeliveryForm sData={(data) => setDeliveryData(data)} />
                     </div>
                     <p className='text-sm mt-10'>© 2001–2024 Интернет-магазин «StyleNest» — Щоразу що треба</p>
                 </div>
@@ -112,7 +120,7 @@ const CheckOutPage = () => {
                                 <div className='text-lg font-semibold'>{totalPrice} $</div>
                             </div>
                         </div>
-                        <button onClick={() => alert('Thanks for order')}
+                        <button onClick={() => placeOrder({ delivery: option.name, payment, receiverData: deliveryData, email: user.email, user: user.id, totalPrice, items: cartItems, date: new Date() })}
                             className=' w-full rounded hover:bg-blue-900 text-base mb-3 bg-blue-800 text-white p-3'>Purchase
                         </button>
                         <div className='text-xs flex flex-col gap-3 text-gray-500'>
