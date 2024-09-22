@@ -31,7 +31,8 @@ const CheckOutPage = () => {
 
     async function placeOrder(obj) {
         console.log(obj)
-        const data = await axios.post('http://localhost:8080/auth/confirmOrder', obj);
+        const data = await axios.post('http://localhost:8080/orders/createOrder', obj);
+        console.log(data)
         if (data.status == '200') {
             navigate('/')
         }

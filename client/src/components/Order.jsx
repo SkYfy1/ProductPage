@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-const Order = () => {
+const Order = ({ item }) => {
     const [showMore, setShowMore] = useState(false)
     return (
         <div className='flex justify-between p-2 my-4'>
@@ -9,9 +9,9 @@ const Order = () => {
                 <div>02.01.2024</div>
                 <div>1 товар</div>
             </div>
-            <div>Сумма</div>
+            <div>Сумма: {item.totalPrice} $</div>
             <button onClick={() => setShowMore(!showMore)}>Подробнее</button>
-            {showMore && <div>afkjnasfnhuasfhasfhiasbihugfasbgihfasbigfbaisgfbiagsfbigasfbgasfgbas</div>}
+            {showMore && <div>{item.receiver.name}</div>}
         </div>
     )
 }

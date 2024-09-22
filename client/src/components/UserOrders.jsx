@@ -32,15 +32,11 @@ const UserOrders = () => {
     return (
       <>Loading...</>
     )
-  } else {
-    return (
-      <>{orders[0].payment}</>
-    )
   }
 
   return (
     <div>
-      <Order />
+      {orders?.map((el) => (<Order key={el.receiver._id} item={el}/>))}
     </div>
   )
 }

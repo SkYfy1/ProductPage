@@ -15,10 +15,10 @@ class orderService {
 
     async createOrder(data) {
         const order = await orderModel.create({
-            user: data.user, delivery: data.delivery, payment: data.payment, receiver: data.receiverData, email: data.email, items: data.items, time: data.date
+            user: data.user, delivery: data.delivery, payment: data.payment, totalPrice: data.totalPrice, receiver: data.receiverData, email: data.email, items: data.items, time: data.date
         })
 
-        return order
+        return order;
     }
 }
 

@@ -14,14 +14,9 @@ interface Item {
 }
 
 export interface OrderResponse {
-    _id: string,
-    user: string,
     delivery: string,
     payment: string,
     receiver: Receiver,
-    email: string,
     totalPrice: number,
     items: Item[],
-    time: string,
-    __v: number
 }
