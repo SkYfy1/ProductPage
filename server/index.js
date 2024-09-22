@@ -33,8 +33,10 @@ mongoose.connect(url).then(() => {
 app.use('/', router);
 
 app.use('/auth', AuthRouter);
+
+app.use('/orders', OrderRouter);
+
 app.use(errorMiddleware);
-app.use('/user', OrderRouter);
 
 app.listen(port, async () => {
     console.log('meow');

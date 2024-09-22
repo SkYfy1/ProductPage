@@ -1,9 +1,10 @@
 import express from 'express'
-import getOrders from '../controllers/ordersController.js';
+import { getOrders, createOrder } from '../controllers/ordersController.js';
 
 
 const OrderRouter = express.Router();
 
-OrderRouter.post('/orders', getOrders);
+OrderRouter.post('/all', getOrders);
+OrderRouter.post('/createOrder', createOrder)
 
 export default OrderRouter;

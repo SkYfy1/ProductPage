@@ -153,21 +153,21 @@ const activate = async (req, res, next) => {
     res.redirect(process.env.CLIENT_URL);
 }
 
-const orderConfirmation = async (req, res, next) => {
-    const { delivery, email, items, payment, receiverData, totalPrice, user, date } = req.body;
+// const orderConfirmation = async (req, res, next) => {
+//     const { delivery, email, items, payment, receiverData, totalPrice, user, date } = req.body;
 
-    // console.log(orderData)
-    // console.log('meow')
+//     // console.log(orderData)
+//     // console.log('meow')
 
-    // await mService.orderConfirmation(orderData.email, orderData);
+//     // await mService.orderConfirmation(orderData.email, orderData);
 
-    const orderData = await orderModel.create({
-        user, delivery, payment, receiver: receiverData, email, totalPrice, items, time: date
-    })
+//     const orderData = await orderModel.create({
+//         user, delivery, payment, receiver: receiverData, email, totalPrice, items, time: date
+//     })
 
-    res.json({ message: 'Order Placed' })
-}
+//     res.json({ message: 'Order Placed' })
+// }
 
 export {
-    findUser, registerUser, loginUser, logout, refresh, getUsers, activate, orderConfirmation
+    findUser, registerUser, loginUser, logout, refresh, getUsers, activate
 }
