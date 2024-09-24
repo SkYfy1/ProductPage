@@ -36,7 +36,7 @@ const UserOrders = () => {
 
   return (
     <div>
-      {orders?.map((el) => (<Order key={el.receiver._id} item={el}/>))}
+      {orders?.map((el, index) => (<Order key={el.receiver._id} item={el} index={index}/>))}
     </div>
   )
 }

@@ -7,7 +7,7 @@ const CartComponent = ({ showCart }) => {
     const { isLoading, cartItems } = useCart();
     const navigate = useNavigate()
 
-    const { decreaseQuantity, increaseQuantity } = useCartStore();
+    const { decreaseQuantity, increaseQuantity, deleteItem } = useCartStore();
 
     if (isLoading) {
         return (
@@ -46,7 +46,7 @@ const CartComponent = ({ showCart }) => {
                                 </svg>
                             </div>
                             <div className='text-xl'>{item.price} $</div>
-
+                            <button onClick={() => deleteItem(item.id)}>Delete item</button>
                         </div>
                     ))}
                 </div>
