@@ -1,16 +1,65 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
+import { animated, useSpring } from '@react-spring/web'
+import { useMemo } from 'react'
+import $api from '../http'
+import { toast, ToastContainer } from 'react-toastify'
 
 const UserProfile = () => {
     const auth = useAuthStore();
     const [showInputs, setShowInputs] = useState({
         password: false,
         email: false
-    })
+    });
+    const [changing, setChanging] = useState(false);
     const [inputValue, setInputValue] = useState('')
-    const [inputValue2, setInputValue2] = useState('')
+    const [inputValue2, setInputValue2] = useState('');
+
+    const [springs, api] = useSpring(() => ({
+        from: { width: 0, backgroundColor: 'rgba(26, 129, 255, 0.8)', },
+        onRest: () => {
+            console.log('end of animation')
+        },
+        config: {
+            duration: 1000,
+        }
+    }));
+
+    const checkPass = useCallback(async (password) => {
+        try {
+            const response = await $api.post('verifyPassword', { password });
+            setInputValue2('');
+            setChanging(!changing)
+        } catch (error) {
+            console.log(error.response?.data?.message);
+            setInputValue2('');
+            setChanging(!changing)
+            toast.error('Something went wrong1!')
+        }
+    });
+
+    const changePass = useCallback(async (password) => {
+        try {
+            const response = await $api.post('changePassword', { password });
+            setInputValue2('');
+            setChanging(!changing);
+            toast.success('Password changed!')
+        } catch (error) {
+            console.log(error.response?.data?.message);
+            setInputValue2('');
+            setChanging(!changing)
+            toast.error('Something went wrong2!')
+        }
+    })
+
+    const handleAnimation = () => {
+        api.start(() => ({
+            to: { width: 150, backgroundColor: 'white', border: '1px solid rgba(26, 129, 255, 0.8)', borderRadius: '3px' },
+        }))
+    }
     return (
         <div className='p-4'>
+            <ToastContainer />
             <div className='flex flex-col gap-4'>
                 <div className='flex gap-2'>
                     <div>User ID:</div>
@@ -33,24 +82,27 @@ const UserProfile = () => {
 
                 </div>
                 <div className='flex gap-2 items-center'>
-                    <h1>Change Password</h1>
-                    <button disabled={showInputs.password} onClick={() => setShowInputs((prev) => ({ ...prev, password: !prev.password }))} className='bg-blue-500 rounded p-1'>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4 text-white">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </button>
+                    <h1>{!showInputs.password ? 'Change Password?' : changing ? 'Type your new password' : 'Type your old password'}</h1>
+                    {!showInputs.password &&
+                        <button onClick={() => { setShowInputs((prev) => ({ ...prev, password: !prev.password })); handleAnimation(); }} className='bg-blue-500 rounded p-1'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-4 text-white">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>}
                     {showInputs.password && <div className='flex gap-2'>
-                    <input className='border border-blue-400 rounded w-1/7 h-6' value={inputValue2} onChange={(e) => setInputValue2(e.target.value)} />
-                    <button onClick={() => {
-                        console.log(`New password: ${inputValue2}`);
-                        setShowInputs((prev) => ({ ...prev, password: false }));
-                        setInputValue2('')
-                    }} className='bg-blue-500 rounded px-2 text-white'>Confirm</button>
+                        <animated.input style={{ padding: '0px 4px', ...springs }} value={inputValue2} onChange={(e) => setInputValue2(e.target.value)} />
+                        <button onClick={() => !changing ? checkPass(inputValue2) : changePass(inputValue2)} className='bg-blue-500 rounded px-2 text-white'>{!changing ? 'Check' : 'Confirm'}</button>
                     </div>}
                 </div>
             </div>
         </div>
     )
 }
+
+// onClick={() => {
+//     console.log(`New password: ${inputValue2}`);
+//     setInputValue2('');
+//     setChanging(!changing)
+// }}
 
 export default UserProfile
