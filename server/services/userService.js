@@ -43,15 +43,15 @@ class userService {
     }
 
     async login(email, password) {
-        const user = await UserModel.findOne({email})
-    
-        if(!user) {
+        const user = await UserModel.findOne({ email })
+
+        if (!user) {
             throw ApiError.BadRequest('Not found account with this email')
         }
-    
+
         const isPassEquals = bcrypt.compare(password, user.password);
-    
-    
+
+
         if (!isPassEquals) {
             throw ApiError.BadRequest('Wrong password')
         }
@@ -74,14 +74,14 @@ class userService {
     }
 
     async refresh(refreshToken) {
-        if(!refreshToken) {
+        if (!refreshToken) {
             throw ApiError.UnauthorizedError();
         }
 
         const userData = tService.validateRefreshToken(refreshToken);
         const tokenFromDb = await tService.findToken(refreshToken);
 
-        if(!userData || !tokenFromDb) {
+        if (!userData || !tokenFromDb) {
             throw ApiError.UnauthorizedError();
         }
 
@@ -102,7 +102,7 @@ class userService {
     async getUsers() {
         const users = await userModel.find({});
 
-        if(!users) {
+        if (!users) {
             throw ApiError.BadRequest('No registered users')
         }
 
@@ -112,7 +112,7 @@ class userService {
     async activateUser(activationLink) {
         const userData = await userModel.findOne({ activationLink });
 
-        if(!userData) {
+        if (!userData) {
             throw ApiError.UnauthorizedError();
         } else {
             userData.isActivated = true;
@@ -123,6 +123,37 @@ class userService {
 
         await mService.afterActivation(userData.email)
         return;
+    }
+
+    async verifyPassword(acc, password) {
+        const account = await userModel.findOne({ acc });
+        
+        if(!account) {
+            throw ApiError.BadRequest('No registered users');
+        }
+
+        const isPassEquals = bcrypt.compare(password, account.password);
+
+        if(!isPassEquals) {
+            throw ApiError.BadRequest('Type legit password');
+        }
+
+        return 'Equal'
+    }
+
+    async changePassword(acc, password) {
+        const account = await userModel.findOne({ acc });
+        
+        if(!account) {
+            throw ApiError.BadRequest('No registered users');
+        }
+
+        const newHashedPassword = hashPassword(password);
+
+        account.password = newHashedPassword;
+        await account.save();
+
+        return account;
     }
 }
 

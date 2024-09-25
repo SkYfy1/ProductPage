@@ -153,6 +153,30 @@ const activate = async (req, res, next) => {
     res.redirect(process.env.CLIENT_URL);
 }
 
+const verify = async (req, res, next) => {
+    try {
+        const { acc, password } = req.body;
+
+        await uService.verifyPassword(acc, password);
+
+        res.json({ message: 'Verified' })
+    } catch (error) {
+        next(error)
+    }
+}
+
+const changePassword = async (req, res, next) => {
+    try {
+        const { acc, password } = req.body;
+
+        await uService.changePassword(acc, password);
+
+        res.json({ message: 'Password changed' })
+    } catch (error) {
+        next(error)
+    }
+}
+
 // const orderConfirmation = async (req, res, next) => {
 //     const { delivery, email, items, payment, receiverData, totalPrice, user, date } = req.body;
 
@@ -169,5 +193,5 @@ const activate = async (req, res, next) => {
 // }
 
 export {
-    findUser, registerUser, loginUser, logout, refresh, getUsers, activate
+    findUser, registerUser, loginUser, logout, refresh, getUsers, activate, verify, changePassword
 }

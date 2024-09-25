@@ -27,7 +27,7 @@ const UserProfile = () => {
 
     const checkPass = useCallback(async (password) => {
         try {
-            const response = await $api.post('verifyPassword', { password });
+            const response = await $api.post('/auth/verifyPassword', { password });
             setInputValue2('');
             setChanging(!changing)
         } catch (error) {
@@ -40,7 +40,7 @@ const UserProfile = () => {
 
     const changePass = useCallback(async (password) => {
         try {
-            const response = await $api.post('changePassword', { password });
+            const response = await $api.post('/auth/changePassword', { password });
             setInputValue2('');
             setChanging(!changing);
             toast.success('Password changed!')
