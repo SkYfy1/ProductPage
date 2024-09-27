@@ -155,11 +155,17 @@ const activate = async (req, res, next) => {
 
 const verify = async (req, res, next) => {
     try {
-        const { acc, password } = req.body;
+        const { email, password } = req.body;
 
-        await uService.verifyPassword(acc, password);
+        const verified = await uService.verifyPassword(email, password);
 
-        res.json({ message: 'Verified' })
+        if(verified) {
+            return res.json({ message: 'Verified' })
+        }
+
+        console.log(verified)
+
+        return res.status(404).json({ message: 'Not Verified' })
     } catch (error) {
         next(error)
     }
@@ -167,11 +173,17 @@ const verify = async (req, res, next) => {
 
 const changePassword = async (req, res, next) => {
     try {
-        const { acc, password } = req.body;
+        const { email, password } = req.body;
 
-        await uService.changePassword(acc, password);
+        const account = await uService.changePassword(email, password);
 
-        res.json({ message: 'Password changed' })
+        if(account) {
+            return res.json({ message: 'Password changed' })
+        }
+
+        console.log(account)
+
+        return res.status(404).json({ message: 'Not Changed' })
     } catch (error) {
         next(error)
     }

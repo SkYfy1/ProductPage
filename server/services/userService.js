@@ -30,7 +30,7 @@ class userService {
         const user = await UserModel.create({
             name, email, password: hashedPassword, activationLink
         });
-        await mService.sendMail(email, `${process.env.API_URL}/auth/activate/${activationLink}`);
+        // await mService.sendMail(email, `${process.env.API_URL}/auth/activate/${activationLink}`);
 
         const user_Dto = new userDto(user);
         const tokens = await tService.generateTokens({ ...user_Dto });
@@ -125,8 +125,12 @@ class userService {
         return;
     }
 
-    async verifyPassword(acc, password) {
-        const account = await userModel.findOne({ acc });
+    async verifyPassword(email, password) {
+        const account = await UserModel.findOne({ email });
+
+        console.log(email)
+
+        console.log(account)
         
         if(!account) {
             throw ApiError.BadRequest('No registered users');
@@ -138,17 +142,23 @@ class userService {
             throw ApiError.BadRequest('Type legit password');
         }
 
-        return 'Equal'
+        return isPassEquals;
     }
 
-    async changePassword(acc, password) {
-        const account = await userModel.findOne({ acc });
+    async changePassword(email, password) {
+        const account = await userModel.findOne({ email });
+
+        console.log(account)
         
         if(!account) {
             throw ApiError.BadRequest('No registered users');
         }
 
-        const newHashedPassword = hashPassword(password);
+        const newHashedPassword = await hashPassword(password);
+
+        console.log('Old' + account.password);
+
+        console.log(`${password} and ${newHashedPassword}`);
 
         account.password = newHashedPassword;
         await account.save();
