@@ -1,12 +1,14 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useAuthStore } from '../store/useAuthStore'
 import { animated, useSpring } from '@react-spring/web'
 import { useMemo } from 'react'
 import $api from '../http'
+import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 
 const UserProfile = () => {
-    const auth = useAuthStore();
+    const auth = useAuthStore(state => state.user);
+    const email = auth.email;
     const [showInputs, setShowInputs] = useState({
         password: false,
         email: false
@@ -25,22 +27,23 @@ const UserProfile = () => {
         }
     }));
 
-    const checkPass = useCallback(async (password) => {
+    const checkPass = async (email, password) => {
+        console.log(email)
         try {
-            const response = await $api.post('/auth/verifyPassword', { password });
+            const response = await axios.post('http://localhost:8080/auth/verifyPassword', { email, password });
             setInputValue2('');
             setChanging(!changing)
+            console.log(response)
         } catch (error) {
             console.log(error.response?.data?.message);
             setInputValue2('');
-            setChanging(!changing)
             toast.error('Something went wrong1!')
         }
-    });
+    }
 
-    const changePass = useCallback(async (password) => {
+    const changePass = async (email, password) => {
         try {
-            const response = await $api.post('/auth/changePassword', { password });
+            const response = await axios.post('http://localhost:8080/auth/changePassword', { email, password });
             setInputValue2('');
             setChanging(!changing);
             toast.success('Password changed!')
@@ -50,7 +53,7 @@ const UserProfile = () => {
             setChanging(!changing)
             toast.error('Something went wrong2!')
         }
-    })
+    }
 
     const handleAnimation = () => {
         api.start(() => ({
@@ -63,14 +66,14 @@ const UserProfile = () => {
             <div className='flex flex-col gap-4'>
                 <div className='flex gap-2'>
                     <div>User ID:</div>
-                    <div>{auth.user.id}</div>
+                    <div>{auth.id}</div>
                 </div>
                 <div className='flex gap-2'>
                     <div>Email:</div>
                     <div className='w-[175px]'>
                         {showInputs.email ?
                             <input className='border border-blue-400 rounded w-full h-6' value={inputValue} onChange={(e) => setInputValue(e.target.value)} /> :
-                            <div>{auth.user.email}</div>
+                            <div>{auth.email}</div>
                         }
                     </div>
 
@@ -91,7 +94,7 @@ const UserProfile = () => {
                         </button>}
                     {showInputs.password && <div className='flex gap-2'>
                         <animated.input style={{ padding: '0px 4px', ...springs }} value={inputValue2} onChange={(e) => setInputValue2(e.target.value)} />
-                        <button onClick={() => !changing ? checkPass(inputValue2) : changePass(inputValue2)} className='bg-blue-500 rounded px-2 text-white'>{!changing ? 'Check' : 'Confirm'}</button>
+                        <button onClick={() => !changing ? checkPass(email, inputValue2) : changePass(email, inputValue2)} className='bg-blue-500 rounded px-2 text-white'>{!changing ? 'Check' : 'Confirm'}</button>
                     </div>}
                 </div>
             </div>
