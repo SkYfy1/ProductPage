@@ -10,7 +10,7 @@
   <li>Раутінг - <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white"></li>
   <li>Стилізація - <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white"></li>
   <li>Валідація - <img src="https://img.shields.io/badge/zod-%233068b7.svg?style=for-the-badge&logo=zod&logoColor=white"></li>
-  <li>Анімація - <img style="width: '200px'" src='https://github.com/user-attachments/assets/553e8c49-5fb1-49e0-9320-ac3d0557b1d9'/></li>
+  <li>Анімація - React Spring</li>
   <li>
     Додаткові технології
     <ul>
