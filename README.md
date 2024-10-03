@@ -2,6 +2,8 @@
 За основу дизайну взяв шаблон з сайту <a href='https://www.greatfrontend.com/projects/challenges/product-details-page'>GreatFrontEnd: Product Details Page</a>;
 Реалізував: Кошик, авторізацію, зміну пароля, створення замовлень, перегляд всіх замовлень.
 
+___
+
 Для фронтенду використовував: 
 <ul>
   <li>Фреймворк - <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"></li>
@@ -20,7 +22,9 @@
   </ul>
   </li>
 </ul>
-Бекенд
+
+___
+Для бекенду використовував
 <ul>
   <li><img src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB"></li>
   <li><img src="https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white"></li>
