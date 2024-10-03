@@ -112,7 +112,7 @@ const CheckOutPage = () => {
                         <h1 className='text-lg font-semibold my-3'>Receiver</h1>
                         <DeliveryForm sData={(data) => setDeliveryData(data)} />
                     </div>
-                    <p className='text-sm mt-10'>© 2001–2024 Интернет-магазин «StyleNest» — Щоразу що треба</p>
+                    <p className='text-sm mt-10'>© 2001–2024 Online shop «StyleNest» — Meow</p>
                 </div>
                 {/* Sidebar */}
                 <div className='w-1/5 fixed top-18 right-40 p-4 rounded'>

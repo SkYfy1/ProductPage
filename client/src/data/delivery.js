@@ -5,7 +5,7 @@ const delivery = [
         time: '1-2 days'
     },
     {
-        name: 'Ukrrr Poshta',
+        name: 'Ukr Poshta',
         price: 40,
         time: '5-7 days'
     },
