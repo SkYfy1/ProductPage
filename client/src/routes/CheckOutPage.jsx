@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query';
 import svg from '../assets/stylenest.svg'
 import useCart from '../hooks/useCart';
 import delivery from '../data/delivery';
 import DeliveryForm from '../components/DeliveryForm';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
-import $api from '../http';
 import axios from 'axios';
+import OrderService from '../services/OrderService';
 
 const options = {
     hour: 'numeric', minute: 'numeric', second: 'numeric',
     timeZoneName: 'long'
+}
+
+async function fetchOrders() {
+    try {
+        const orders = await OrderService.getOrders();
+        const data = orders.data;
+        return data.length;
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 
@@ -24,7 +35,11 @@ const CheckOutPage = () => {
     const [payment, setPayment] = useState("Payment upon receipt");
     const user = useAuthStore((state) => state.user);
     const [deliveryData, setDeliveryData] = useState({});
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { data: orderNumber } = useQuery({
+        queryKey: ['number'],
+        queryFn: () => fetchOrders(),
+    })
 
     const cartPrice = cartItems.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0);
     const totalPrice = cartPrice + option.price
@@ -48,7 +63,7 @@ const CheckOutPage = () => {
                 <div className='w-full'>
                     <div className='flex flex-col gap-4 my-3'>
                         <h1 className='text-3xl font-semibold'>Checkout {user.email}</h1>
-                        <p className='text-lg font-semibold'>Order №{Math.ceil(Math.random() * 100)}</p>
+                        <p className='text-lg font-semibold'>Order №{orderNumber + 1}</p>
                     </div>
                     <div className='p-5 border border-gray-400 rounded'>
                         {cartItems.map((item) => (

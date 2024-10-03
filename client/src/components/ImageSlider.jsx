@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import CollectionItem from './CollectionItem'
 
 const ImageSlider = ({ prod }) => {
     const [index, setIndex] = useState(0);
     const [translate, setTranslate] = useState(0);
-    useEffect(() => {
-        console.log(translate)
-    }, [translate])
     return (
         <div className='flex flex-col w-[800px] gap-6 overflow-hidden'>
             <CollectionItem col={prod.collection} img={prod.images[index].image_url} />

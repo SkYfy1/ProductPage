@@ -20,6 +20,16 @@ class orderService {
 
         return order;
     }
+
+    async getAllOrders() {
+        const orders = await orderModel.find({});
+
+        if(!orders) {
+            throw ApiError.ApiError("Something went wrong");
+        }
+
+        return orders;
+    }
 }
 
 const oService = new orderService();

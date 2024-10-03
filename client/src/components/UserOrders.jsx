@@ -19,7 +19,6 @@ async function fetchOrders(user) {
 const UserOrders = () => {
   const user = useAuthStore((state) => state.user.id);
 
-
   const {
     isLoading,
     data: orders

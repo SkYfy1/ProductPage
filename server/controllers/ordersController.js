@@ -15,9 +15,9 @@ const createOrder = async (req, res, next) => {
     }
 }
 
-const getOrders = async (req, res, next) => {
+const getUserOrders = async (req, res, next) => {
     try {
-        const { user } = req.body;
+        const user = req.params.id;
 
         const orders = await oService.getOrdersById(user);
 
@@ -29,4 +29,16 @@ const getOrders = async (req, res, next) => {
     }
 }
 
-export { getOrders, createOrder };
+const getAllOrders = async (req, res, next) => {
+    try {
+        const orders = await oService.getAllOrders();
+
+        const orders_Dto = await orders.map(el => new ordersDto(el));
+
+        return res.json(orders_Dto);
+    } catch (error) {
+        next(error)
+    }
+}
+
+export { getUserOrders, createOrder, getAllOrders };
