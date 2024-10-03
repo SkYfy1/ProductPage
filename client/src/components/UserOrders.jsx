@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import OrderService from '../services/OrderService'
 import Order from './Order'
-import axios from 'axios'
-import $api from '../http'
 import { useAuthStore } from '../store/useAuthStore';
 import { useQuery } from '@tanstack/react-query'
 

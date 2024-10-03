@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useAuthStore } from '../store/useAuthStore'
 import { Link } from 'react-router-dom'
 import UserProfile from '../components/UserProfile'
 import UserOrders from '../components/UserOrders'

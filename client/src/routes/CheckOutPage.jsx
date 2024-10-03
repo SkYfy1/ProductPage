@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query';
 import svg from '../assets/stylenest.svg'
 import useCart from '../hooks/useCart';

@@ -1,7 +1,7 @@
 import React from 'react'
 import useCartStore from '../store/useCartStore'
 import useCart from '../hooks/useCart'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const CartComponent = ({ showCart }) => {
     const { isLoading, cartItems } = useCart();

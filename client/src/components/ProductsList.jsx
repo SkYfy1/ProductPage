@@ -1,5 +1,5 @@
 import ProductMini from './ProductMini'
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const ProductList = ({ products }) => {
     const memoizedProducts = useMemo(() => products, [products]);

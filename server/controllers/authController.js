@@ -2,8 +2,6 @@ import userModel from "../models/user.js";
 import uService from "../services/userService.js";
 import { validationResult } from "express-validator";
 import ApiError from "../exceptions/api-error.js";
-import mService from "../services/mailService.js";
-import orderModel from "../models/order.js";
 
 const findUser = async (req, res) => {
     const { email } = req.body;
