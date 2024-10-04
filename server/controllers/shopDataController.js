@@ -1,5 +1,6 @@
 import ColModel from '../models/collection.js';
 import ProductModel from '../models/product.js';
+import sService from '../services/shopService.js';
 
 const getCollections = async (req, res) => {
     const collections = await ColModel.find({});
@@ -35,13 +36,26 @@ const getAllProductsInCollection = async (req, res) => {
     res.json(collection)
 }
 
+const getProductsByCategory = async (req, res, next) => {
+    try {
+        const category = req.params.name;
+
+        const products = await sService.getProductsByCategory(category);
+
+        res.json(products)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 export {
     getCollections,
     getAllProducts,
     getAllProductsInCollection,
     getFewProductsByCollection,
-    getProductById
+    getProductById,
+    getProductsByCategory
 }
 
 

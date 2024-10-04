@@ -15,6 +15,7 @@ import MainLayout from "./layouts/MainLayout.jsx"
 import SideLayout from "./layouts/SideLayout.jsx"
 import UserPage from './routes/UserPage.jsx'
 import { useAuthStore } from './store/useAuthStore.jsx'
+import CategoriesPage from './routes/CategoriesPage.jsx'
 
 
 const queryClient = new QueryClient()
@@ -53,6 +54,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
           <Route path="/latest" element={<LatestPage />} />
           <Route path="/collection/:name" element={<CollectionPage />} />
+          <Route path="/category/:name" element={<CategoriesPage />} />
         </Route>
         <Route element={<SideLayout />}>
           <Route path="/login" element={<LoginPage />} />

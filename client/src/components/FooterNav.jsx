@@ -11,9 +11,9 @@ const FooterNav = () => {
             </div>
             <ul className='flex text-base flex-col gap-2 flex-2 '>
                 <li className='text-gray-400'>SHOP CATEGORIES</li>
-                <li>Unisex</li>
-                <li>Women</li>
-                <li>Men</li>
+                <Link to='/category/unisex'>Unisex</Link>
+                <Link to='/category/women'>Women</Link>
+                <Link to='/category/men'>Men</Link>
             </ul>
             <ul className='flex text-base flex-col gap-2 flex-2'>
                 <li className='text-gray-400'>SHOP COLLECTIONS</li>
