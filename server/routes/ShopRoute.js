@@ -9,7 +9,6 @@ router.get('/latest', getAllProducts)
 
 router.get('/product/:id', getProductById)
 
-
 router.get('/collection/:id', getFewProductsByCollection)
 
 router.get('/collection/:name', getAllProductsInCollection)

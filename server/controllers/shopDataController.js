@@ -2,38 +2,62 @@ import ColModel from '../models/collection.js';
 import ProductModel from '../models/product.js';
 import sService from '../services/shopService.js';
 
-const getCollections = async (req, res) => {
-    const collections = await ColModel.find({});
-    res.json(collections);
+const getCollections = async (req, res, next) => {
+    try {
+        const collections = await sService.getCollections();
+        
+        res.json(collections);
+    } catch (error) {
+        next(error)
+    }
+
 };
 
-const getAllProducts = async (req, res) => {
-    const all = await ProductModel.find({});
-    res.json(all);
+const getAllProducts = async (req, res, next) => {
+    try {
+        const all = await sService.getAllProducts();
+
+        res.json(all);
+    } catch (error) {
+        next(error)
+    }
+
 }
 
-const getProductById = async (req, res) => {
-    const product = await ProductModel.findOne({
-        'product_id': req.params.id
-    });
+const getProductById = async (req, res, next) => {
+    try {
+        const id = req.params.id;
 
-    res.json(product)
+        const product = await sService.getProductById(id);
+
+        res.json(product)
+    } catch (error) {
+        next(error);
+    }
 }
 
-const getFewProductsByCollection = async (req, res) => {
-    const collection = await ProductModel.find({
-        'collection': req.params.id
-    }).limit(4);
+const getFewProductsByCollection = async (req, res, next) => {
+    try {
+        const id = req.params.id;
 
-    res.json(collection)
+        const collection = await sService.getFewProducts(id);
+
+        res.json(collection)
+    } catch (error) {
+
+    }
 }
 
-const getAllProductsInCollection = async (req, res) => {
-    const collection = await ProductModel.find({
-        'collection': req.params.name
-    })
+const getAllProductsInCollection = async (req, res, next) => {
+    try {
+        const name = req.params.name;
 
-    res.json(collection)
+        const collection = await sService.getAllProducts(name)
+
+        res.json(collection)
+    } catch (error) {
+        next(error)
+    }
 }
 
 const getProductsByCategory = async (req, res, next) => {
@@ -44,7 +68,7 @@ const getProductsByCategory = async (req, res, next) => {
 
         res.json(products)
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 
