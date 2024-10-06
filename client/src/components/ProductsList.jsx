@@ -14,7 +14,7 @@ const ProductList = ({ products }) => {
     // }, [count])
     return (
         <>
-            <div className='grid grid-cols-6 grid-rows-2 ml-[22px] w-full'>
+            <div className='grid grid-cols-2 grid-rows-2 lg:grid-cols-6 lg:grid-rows-2 w-full'>
                 {memoizedProducts.map((prod, index) => {
                     if (index) return (
                         <ProductMini key={prod.name} prod={prod} />

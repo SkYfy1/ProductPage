@@ -48,10 +48,10 @@ const Navbar = ({ showCart }) => {
     </nav>
     }
     return (
-        <nav className='mx-auto pt-10 flex items-center justify-between max-w-[1430px]'>
-            <div className='flex items-center gap-36'>
-                <img src={svg} alt="logoImg" />
-                <div className='flex gap-8'>
+        <nav className='mx-auto px-5 pt-12 lg:pt-10 flex items-center justify-between max-w-[1430px]'>
+            <div className='flex gap-2 items-center text-center lg:gap-36'>
+                <img src={svg} className='w-20 lg:w-24 absolute top-3 left-1/2 -translate-x-1/2 lg:-translate-x-0 lg:static' alt="logoImg" />
+                <div className='flex flex-col lg:flex-row text-xs md:text-base gap-4 lg:gap-8'>
                     <Link to={'/'}>Collections</Link>
                     <Link to={'/latest'}>Latest Arrivals</Link>
                 </div>
@@ -70,12 +70,12 @@ const Navbar = ({ showCart }) => {
                     <div className='absolute rounded-full bg-blue-500 size-4 text-center text-xs left-3 top-4'>{Object.keys(cart).length}</div>
                 </div>
                 {store.isAuth ?
-                    <div>
+                    <div className='lg:text-base text-sm'>
                         <button onClick={() => store.logout()}>Log Out</button>
                     </div> :
                     <div>
-                        <Link to={'/authorization'} className='px-4 py-2 text-base  text-gray-700 rounded-md hover:bg-gray-300 transition-all duration-300 ease-in'>Log in</Link>
-                        <Link to={'/authorization'} className='px-4 py-2 text-base ml-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-all duration-300 ease-in'>Sign up for free</Link>
+                        <Link to={'/authorization'} className='lg:px-4 py-2 text-base  text-gray-700 rounded-md hover:bg-gray-300 transition-all duration-300 ease-in'>Log in</Link>
+                        <Link to={'/authorization'} className='lg:px-4 py-2 text-base ml-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition-all duration-300 ease-in'>Sign up for free</Link>
                     </div>}
             </div>
         </nav>

@@ -1,11 +1,9 @@
-import ColModel from '../models/collection.js';
-import ProductModel from '../models/product.js';
 import sService from '../services/shopService.js';
 
 const getCollections = async (req, res, next) => {
     try {
         const collections = await sService.getCollections();
-        
+
         res.json(collections);
     } catch (error) {
         next(error)

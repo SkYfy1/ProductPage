@@ -19,7 +19,7 @@ const AllCollections = () => {
     }
 
     return (
-        <div className='flex gap-2'>
+        <div className='flex flex-col lg:flex-row gap-2'>
             {collections?.map((el) => (
                 <CollectionItem key={el.name} name={el.name} id={el.collection_id} img={el.image_url} />
             ))}
