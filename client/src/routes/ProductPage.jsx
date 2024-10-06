@@ -45,7 +45,7 @@ const ProductPage = () => {
   }
   return (
       <div className='lg:px-24 px-6 mx-auto my-0 pt-16 '>
-        {window.innerWidth <= 414 && <h1 className='text-3xl font-medium text-center tracking-wide mb-3'>{product.name}</h1>}
+        {/* {window.innerWidth <= 414 && <h1 className='text-3xl font-medium text-center tracking-wide mb-3'>{product.name}</h1>} */}
         <div className='flex flex-col lg:flex-row items-center lg:items-start gap-8 justify-center mb-10 lg:mb-52'>
           <ImageSlider prod={product}/>
           <ProductInfo prod={product}/>
