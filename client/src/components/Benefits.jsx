@@ -5,15 +5,15 @@ const Benefits = () => {
     const [benefit, setBenefit] = useState('Sustainability');
 
     return (
-        <div className='pb-44'>
-            <div className='border-b flex gap-4 border-gray-400 text-md font-medium text-gray-600'>
+        <div className='pb-6 lg:pb-44 text-ce'>
+            <div className='lg:border-b flex flex-wrap gap-4 border-gray-400 text-xs lg:text-base font-medium text-gray-600'>
                 <button onClick={(e) => setBenefit(e.target.textContent)} className={'Sustainability' === benefit ? 'pb-2 border-b relative top-px px-2 border-blue-800 text-blue-800' : 'pb-2 px-2'}>Sustainability</button>
                 <button onClick={(e) => setBenefit(e.target.textContent)} className={'Comfort' === benefit ? 'pb-2 border-b relative top-px px-2 border-blue-800 text-blue-800' : 'pb-2 px-2'}>Comfort</button>
                 <button onClick={(e) => setBenefit(e.target.textContent)} className={'Durability' === benefit ? 'pb-2 border-b relative top-px px-2 border-blue-800 text-blue-800' : 'pb-2 px-2'}>Durability</button>
                 <button onClick={(e) => setBenefit(e.target.textContent)} className={'Versatility' === benefit ? 'pb-2 border-b relative top-px px-2 border-blue-800 text-blue-800' : 'pb-2 px-2'}>Versatility</button>
             </div>
-            <div className='h-56 flex mt-6 gap-6'>
-                <img src={woman} alt="nature" className='rounded-md w-1/3 object-cover' />
+            <div className='md:h-56 flex flex-col lg:flex-row mt-6 gap-6'>
+                <img src={woman} alt="nature" className='rounded-md lg:w-1/3 object-cover' />
                 <div className='flex-1'>
                     <h2 className='text-2xl font-semibold'>Eco-Friendly Choice</h2>
                     <p>Withdj iasdjasjdasj dajisdasdnjasd jkasjdkasdn asj kdnaskj dlasdk mlasdas dsdasdasdasda sdasdasd asdasd.</p>

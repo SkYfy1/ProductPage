@@ -44,14 +44,16 @@ const ProductPage = () => {
     return (<div>{error.message}</div>)
   }
   return (
-      <div className='px-24 mx-auto my-0 pt-16'>
-        <div className='flex gap-8 justify-center mb-52'>
+      <div className='lg:px-24 px-6 mx-auto my-0 pt-16 '>
+        {window.innerWidth <= 414 && <h1 className='text-3xl font-medium text-center tracking-wide mb-3'>{product.name}</h1>}
+        <div className='flex flex-col lg:flex-row items-center lg:items-start gap-8 justify-center mb-10 lg:mb-52'>
           <ImageSlider prod={product}/>
           <ProductInfo prod={product}/>
         </div>
         <div className='pb-8'>
-          <h1 className='text-4xl mb-4 font-semibold tracking-wide'>Discover timeless elegance</h1>
-          <p className='text-sm'>Step into a world where quality meetss quintessential charm with our collection.dsada fdzXvasfas dfads fasdfasdfdsadfasdfgasdgasdgasg asgasdgasdgdasgsadgasdgasdgdasgdasgsdagsadgsadgasdgadsgag.</p>
+          <h1 className='lg:text-4xl text-xl mb-4 font-semibold tracking-wide'>Discover timeless elegance</h1>
+          <p className=' text-xs lg:text-sm'>Step into a world where quality meetss quintessential charm with our collection.dsada fdzXvasfas dfads fasdfasdfdsadfasdfgasdgasdgasg asgasdgasdgdasgsadgasdgasdgda
+            sgdasgsdagsadgsadgasdgadsgag.</p>
         </div>
         <Benefits />
         <Collection collection={product.collection}/>

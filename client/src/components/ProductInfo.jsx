@@ -22,7 +22,7 @@ const ProductInfo = ({ prod }) => {
 
     return (
         <div>
-            <h1 className='text-4xl font-medium tracking-wide mb-3'>{prod.name}</h1>
+            {window.innerWidth > 414 && <h1 className='text-4xl font-medium tracking-wide mb-3'>{prod.name}</h1>}
             <div className='flex gap-1 items-center'>
                 <h3 className=' text-slate-600 text-lg font-medium'>{price}$</h3>
                 <h3 className=' text-slate-400 text-base line-through font-light self-end'>{prod.price}$</h3>

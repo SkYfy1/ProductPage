@@ -41,8 +41,8 @@ const Collection = ({ collection }) => {
 
   return (
     <div className='flex justify-start flex-col pb-5 w-full'>
-      <h1 className='text-3xl font-semibold'>In this collection</h1>
-      <div className='flex justify-between'>
+      <h1 className='lg:text-3xl text-xl text-center lg:text-left font-semibold'>In this collection</h1>
+      <div className='flex flex-col lg:flex-row justify-between'>
         {col.map((el) => (
           <ProductMini key={el.product_id} prod={el} />
         ))}
