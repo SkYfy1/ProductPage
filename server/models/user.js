@@ -5,7 +5,8 @@ const userSchema = new mongoose.Schema({
     name: String,
     password: String,
     isActivated: { type: Boolean, default: false },
-    activationLink: String
+    activationLink: String,
+    status: String
 })
 
 const userModel = mongoose.model('Useri', userSchema);

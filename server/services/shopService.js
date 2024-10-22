@@ -68,6 +68,16 @@ class shopService {
 
         return products;
     }
+
+    async addProduct(data) {
+        const product = await ProductModel.create({
+            ...data
+        });
+
+        return {
+            ...product
+        }
+    }
 }
 
 const sService = new shopService();

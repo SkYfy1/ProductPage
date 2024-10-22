@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import UserProfile from '../components/UserProfile'
 import UserOrders from '../components/UserOrders'
+import AdminPanel from '../components/Admin.tsx'
+import { useAuthStore } from '../store/useAuthStore'
 
 const UserPage = () => {
   const [data, setData] = useState('Info');
+  const status = useAuthStore(state => state.user.status);
 
   return (
     <div className='min-h-screen flex justify-center items-center h-fit'>
@@ -18,11 +21,13 @@ const UserPage = () => {
           </Link>
           <ul className='flex gap-2 text-center mx-auto w-1/2 justify-center'>
             <li onClick={() => setData('Info')} className={data === 'Info' ? 'border-b-blue-500 border-b-4 p-2 hover:border-b-blue-800' : 'p-2 border-b-blue-500'}>Acc info</li>
-            <li onClick={() => setData('Orders')} className={data === 'Orders' ? 'border-b-blue-500 border-b-4 p-2 hover:border-b-blue-800' : 'p-2 border-b-blue-500'}>Orders</li>
+            {status === 'dd' ? <li onClick={() => setData('Orders')} className={data === 'Orders' ? 'border-b-blue-500 border-b-4 p-2 hover:border-b-blue-800' : 'p-2 border-b-blue-500'}>Orders</li> :
+              <li onClick={() => setData('Admin Panel')} className={data === 'Admin Panel' ? 'border-b-blue-500 border-b-4 p-2 hover:border-b-blue-800' : 'p-2 border-b-blue-500'}>Add Product</li>}
           </ul>
         </div>
         {data === 'Info' && <UserProfile />}
         {data === 'Orders' && <UserOrders />}
+        {data === 'Admin Panel' && <AdminPanel />}
       </div>
     </div >
   )

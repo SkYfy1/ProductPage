@@ -95,6 +95,9 @@ const UserProfile = () => {
                         <button onClick={() => !changing ? checkPass(email, inputValue2) : changePass(email, inputValue2)} className='bg-blue-500 rounded px-2 text-white'>{!changing ? 'Check' : 'Confirm'}</button>
                     </div>}
                 </div>
+                <div>
+                    {auth.status === 'user' ? <div>{auth.status.charAt(0).toUpperCase() + auth.status.slice(1)}</div> : <div>{auth.status}</div>}
+                </div>
             </div>
         </div>
     )

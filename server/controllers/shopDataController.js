@@ -70,6 +70,20 @@ const getProductsByCategory = async (req, res, next) => {
     }
 }
 
+const addProduct =  async (req, res, next) => {
+    try {
+        const data = req.body;
+
+        const product = await sService.addProduct(data);
+
+        console.log(product)
+
+        res.json(product)
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 export {
     getCollections,
@@ -77,7 +91,8 @@ export {
     getAllProductsInCollection,
     getFewProductsByCollection,
     getProductById,
-    getProductsByCategory
+    getProductsByCategory,
+    addProduct
 }
 
 
