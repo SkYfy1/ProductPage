@@ -1,39 +1,10 @@
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Input from './Input'
-import axios from 'axios'
 import { useState } from 'react'
-
-const formSchema = z.object({
-    product_id: z.string(),
-    name: z.string(),
-    description: z.string(),
-    category: z.union([z.literal('dd'), z.literal('ss')]),
-    collection: z.string(),
-    additional_info: z.array(z.object({
-        title: z.string(),
-        description: z.string()
-    })),
-    images: z.array(z.object({
-        color: z.string(),
-        image_url: z.string()
-    })),
-    price: z.string(),
-    colors_available: z.array(z.object({
-        color: z.string(),
-        quantity: z.string()
-    }))
-});
-
-type FormFields = z.infer<typeof formSchema>;
-
-const submit = async (data: FormFields) => {
-    const d = await axios.post('http://localhost:8080/addProduct', { ...data });
-
-    console.log(d)
-}
+import { formSchema, FormFields } from '../models/formSchemas/addSchema'
+import submit from '../functions/submittingFunc/addProduct'
 
 
 
@@ -51,7 +22,9 @@ const AdminPanel = () => {
         additional: ['',]
     })
 
-    const onSubmit: SubmitHandler<FormFields> = (data) => submit(data);
+    // { const i = await ProductService.addProduct(data); console.log(i)}
+
+    const onSubmit: SubmitHandler<FormFields> = async (data) => submit(data);
 
     return (
         <div className='p-3'>
@@ -61,7 +34,12 @@ const AdminPanel = () => {
                     <Input type="product_id" register={register} />
                     <Input type="name" register={register} />
                     <Input type="description" register={register} />
-                    <Input type="collection" register={register} />
+                    <select className='h-12' {...register('collection')}>
+                        <option value="fresh">Fresh</option>
+                        <option value="urban">Urban</option>
+                        <option value="cozy">Cozy</option>
+                    </select>
+                    {/* <Input type="collection" register={register} /> */}
                     <Input type='price' register={register} />
                 </div>
                 <div className='flex flex-col items-center'>
@@ -93,8 +71,9 @@ const AdminPanel = () => {
                 </div>
                 <div className='w-full flex flex-col gap-2'>
                     <select className='h-12' {...register('category')}>
-                        <option value="dd">dd</option>
-                        <option value="ss">ss</option>
+                        <option value="unisex">Unisex</option>
+                        <option value="men">Men</option>
+                        <option value="women">Women</option>
                     </select>
                     <div className='flex flex-col gap-2'>
                         <button onClick={() => setQuantity(prev => ({
