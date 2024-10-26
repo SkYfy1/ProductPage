@@ -1,5 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Image from './Image';
+import { Suspense } from 'react';
+import { lazy } from 'react';
+
+const LazyImg = React.lazy(() => import('./Image.jsx'))
 
 const ProductMini = React.memo(({ prod }) => {
   const navigate = useNavigate();
@@ -25,10 +30,13 @@ const ProductMini = React.memo(({ prod }) => {
   //     </div>
   //   )
   // }
+  useEffect(() => {
+    console.log('Rerender')
+  })
   return (
     <div className='mt-5 cursor-pointer flex flex-col items-center' onClick={() => navigate(`/product/${prod.product_id}`)}>
-      <img src={prod.images[0].image_url} className='size-32 gap-10 rounded-md object-cover' alt="" />
-      {/* <div className={`h-52 w-48 gap-10 rounded-md object-cover bg-[url(${prod.images[0].image_url})`}>dasdas</div> */}
+        <Image img={prod.images[0].image_url} />
+      {/* <img src={prod.images[0].image_url} className='size-32 gap-10 rounded-md object-cover' alt="" /> */}
       <p className=' text-xs text-gray-500 font-semibold mt-2 mb-1'>{prod.images[0].color}</p>
       <h3 className=' text-sm lg:text-base'>{prod.name}</h3>
       <h3 className=' lg:text-sm text-xs text-gray-500 mt-2'>{prod.price}$</h3>

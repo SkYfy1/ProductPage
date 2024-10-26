@@ -2,6 +2,7 @@ import React from 'react'
 import ProductList from '../components/ProductsList'
 import { useQuery } from '@tanstack/react-query'
 import { fetchLatest } from '../functions/fetch.js'
+import { Suspense } from 'react';
 
 const LatestPage = () => {
     const { data: products,

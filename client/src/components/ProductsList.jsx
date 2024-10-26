@@ -1,5 +1,6 @@
 import ProductMini from './ProductMini'
 import { useMemo, useState } from 'react';
+import { Suspense } from 'react';
 
 const ProductList = ({ products }) => {
     const memoizedProducts = useMemo(() => products, [products]);
@@ -16,8 +17,9 @@ const ProductList = ({ products }) => {
         <>
             <div className='grid grid-cols-2 grid-rows-2 lg:grid-cols-6 lg:grid-rows-2 w-full'>
                 {memoizedProducts.map((prod, index) => {
-                    if (index) return (
-                        <ProductMini key={prod.name} prod={prod} />
+                    if (index) return (                  
+                            <ProductMini key={prod._id} prod={prod} />
+                        // <ProductMini key={prod._id} prod={prod} />
                     )
                 })}
             </div>

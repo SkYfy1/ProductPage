@@ -16,11 +16,10 @@ const ImageSlider = ({ prod }) => {
                 <div className='flex gap-2 w-fit transition-transform duration-500 ease-out'
                     style={{ transform: `translateX(-${translate}px)` }}
                 >
-                    {prod.images.map((el, ind) => (
-                        <>
-                            <img onClick={() => setIndex(ind)} src={el.image_url} key={ind} alt="" className={index == ind ? 'object-cover rounded-md lg:w-[90px] w-[45px] border-2 border-blue-800' : 'object-cover rounded-md w-[45px] lg:w-[90px] border-2 border-transparent hover:cursor-pointer'} />
-                        </>
-                    ))}
+                    {prod.images.map((el, ind) => {
+                        return (
+                            <img onClick={() => setIndex(ind)} loading='lazy' src={el.image_url} key={el._id} alt="" className={index == ind ? 'object-cover rounded-md lg:w-[90px] w-[45px] border-2 border-blue-800' : 'object-cover rounded-md w-[45px] lg:w-[90px] border-2 border-transparent hover:cursor-pointer'} />
+                    )})}
                 </div>
                 {/* {prod.images.map((el, ind) => (
                         <img onClick={() => setIndex(ind)} src={el.image_url} key={ind} alt="" className={index == ind ? 'object-cover rounded-md w-32 border-2 border-blue-800' : 'object-cover rounded-md w-32 border-2 border-transparent'} />
