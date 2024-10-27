@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProductInfo from '../components/ProductInfo'
 import ImageSlider from '../components/ImageSlider'
 import Benefits from '../components/Benefits'
 import Collection from '../components/Collection'
-import Footer from '../components/Footer'
 import { useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import ReviewModal from '../components/ReviewModal'
 const fetchProduct = async (id) => {
   const response = await fetch(`/api/product/${id}`);
   
@@ -27,6 +27,7 @@ const fetchProduct = async (id) => {
 
 const ProductPage = () => {
   const { id } = useParams();
+  const [showReviews, setShowReviews] = useState(false);
   const {
     data: product,
     isLoading,
@@ -34,7 +35,22 @@ const ProductPage = () => {
   } = useQuery({
     queryKey: ['product', id],
     queryFn: () => fetchProduct(id)
-  })
+  });
+
+  useEffect(() => {
+    function stopScroll(e) {
+      e.preventDefault();
+      console.log('stopScroll')
+    }
+
+    showReviews && window.addEventListener('scroll', stopScroll, { passive: false });
+    showReviews && window.addEventListener('wheel', stopScroll, { passive: false });
+
+    return () => {
+      window.removeEventListener('scroll', stopScroll)
+      window.removeEventListener('wheel', stopScroll);
+    }
+  }, [showReviews])
 
   if (isLoading) {
     return (<div>Loading...</div>)
@@ -48,7 +64,7 @@ const ProductPage = () => {
         {/* {window.innerWidth <= 414 && <h1 className='text-3xl font-medium text-center tracking-wide mb-3'>{product.name}</h1>} */}
         <div className='flex flex-col lg:flex-row items-center lg:items-start gap-8 justify-center mb-10 lg:mb-52'>
           <ImageSlider prod={product}/>
-          <ProductInfo prod={product}/>
+          <ProductInfo prod={product} show={() => setShowReviews(true)}/>
         </div>
         <div className='pb-8'>
           <h1 className='lg:text-4xl text-xl mb-4 font-semibold tracking-wide'>Discover timeless elegance</h1>
@@ -57,6 +73,7 @@ const ProductPage = () => {
         </div>
         <Benefits />
         <Collection collection={product.collection}/>
+        {showReviews && <ReviewModal id={id} show={(bool) => setShowReviews(bool)}/>}
       </div>
   )
 }

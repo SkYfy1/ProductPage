@@ -28,6 +28,8 @@ const getProductById = async (req, res, next) => {
 
         const product = await sService.getProductById(id);
 
+        // 
+        // console.log(product)
         res.json(product)
     } catch (error) {
         next(error);
@@ -70,7 +72,7 @@ const getProductsByCategory = async (req, res, next) => {
     }
 }
 
-const addProduct =  async (req, res, next) => {
+const addProduct = async (req, res, next) => {
     try {
         const data = req.body;
 
@@ -84,6 +86,30 @@ const addProduct =  async (req, res, next) => {
     }
 }
 
+const addReview = async (req, res, next) => {
+    try {
+        const data = req.body;
+
+        const product = await sService.addReview(data);
+
+        res.json('Review Placed!')
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getAllReviews = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+
+        const reviews = await sService.getAllReviews(id);
+
+        res.json(reviews);
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 export {
     getCollections,
@@ -92,7 +118,9 @@ export {
     getFewProductsByCollection,
     getProductById,
     getProductsByCategory,
-    addProduct
+    addProduct,
+    addReview,
+    getAllReviews 
 }
 
 

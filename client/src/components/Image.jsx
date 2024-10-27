@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { useSpring, animated } from '@react-spring/web';
 
 
 const Image = React.memo(({ img }) => {
@@ -14,7 +15,7 @@ const Image = React.memo(({ img }) => {
             <img
                 src={img}
                 className='size-32 gap-10 rounded-md object-cover'
-                onLoad={() => setLoading(false)}
+                onLoad={() => { setLoading(false); }}
                 alt="product"
                 style={{ display: loading ? 'none' : 'block' }}
             />

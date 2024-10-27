@@ -14,6 +14,11 @@ const quantitySchema = new mongoose.Schema({
     color: String,
     quantity: Number
 });
+const reviewSchema = new mongoose.Schema({
+    user: { type: String, required: true },
+    review: { type: String, required: true },
+    stars: { type: Number, required: true, default: 3}
+})
 
 const productSchema = new mongoose.Schema({
     product_id: { type: String, required: true, unique: true },
@@ -25,7 +30,8 @@ const productSchema = new mongoose.Schema({
     additional_info: [additionalInfoSchema],
     images: [imageSchema],
     price: Number,
-    colors_available: [quantitySchema]
+    colors_available: [quantitySchema],
+    reviews: [reviewSchema]
 });
 
 const ProductModel = mongoose.model('Product', productSchema);

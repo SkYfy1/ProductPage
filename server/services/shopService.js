@@ -5,8 +5,8 @@ import ColModel from "../models/collection.js";
 class shopService {
     async getCollections() {
         const collections = await ColModel.find({});
-        
-        if(!collections) {
+
+        if (!collections) {
             throw ApiError.UnauthorizedError();
         }
 
@@ -16,7 +16,7 @@ class shopService {
     async getAllProducts() {
         const all = await ProductModel.find({});
 
-        if(!all) {
+        if (!all) {
             throw ApiError.UnauthorizedError();
         }
 
@@ -28,7 +28,7 @@ class shopService {
             'product_id': id
         });
 
-        if(!product) {
+        if (!product) {
             throw ApiError.UnauthorizedError();
         }
 
@@ -40,7 +40,7 @@ class shopService {
             'collection': name
         })
 
-        if(!collection) {
+        if (!collection) {
             throw ApiError.UnauthorizedError();
         }
 
@@ -52,7 +52,7 @@ class shopService {
             'collection': name
         }).limit(4);
 
-        if(!collection) {
+        if (!collection) {
             throw ApiError.UnauthorizedError();
         }
 
@@ -62,7 +62,7 @@ class shopService {
     async getProductsByCategory(category) {
         const products = await ProductModel.find({ category })
 
-        if(!products) {
+        if (!products) {
             throw ApiError.UnauthorizedError();
         }
 
@@ -77,6 +77,35 @@ class shopService {
         return {
             ...product
         }
+    }
+
+    async addReview(data) {
+        const { review, user, stars, product_id } = data;
+        const product = await ProductModel.findOne({
+            product_id
+        });
+
+        if (!product) {
+            throw ApiError.BadRequest('Not found')
+        }
+
+        product.reviews.push({ review, user, stars });
+        await product.save();
+
+        return product;
+    }
+
+
+    async getAllReviews(id) {
+        const product = await ProductModel.findOne({
+            product_id: id
+        });
+
+        if (!product) {
+            throw ApiError.BadRequest('Not found')
+        }
+
+        return product.reviews;
     }
 }
 

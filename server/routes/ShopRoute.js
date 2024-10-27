@@ -1,5 +1,5 @@
 import express from 'express'
-import { getCollections, getAllProducts, getAllProductsInCollection, getFewProductsByCollection, getProductById, getProductsByCategory, addProduct } from '../controllers/shopDataController.js'
+import { getCollections, getAllProducts, getAllProductsInCollection, getFewProductsByCollection, getProductById, getProductsByCategory, addProduct, addReview, getAllReviews  } from '../controllers/shopDataController.js'
 
 const router = express.Router();
 
@@ -16,5 +16,9 @@ router.get('/collection/:name', getAllProductsInCollection)
 router.get('/category/:name', getProductsByCategory)
 
 router.post('/addProduct', addProduct)
+
+router.post('/addReview', addReview);
+
+router.get('/getReviews/:id' , getAllReviews);
 
 export default router;
