@@ -10,6 +10,10 @@ class OrderService {
     static async getOrders():  Promise<AxiosResponse<OrderResponse>> {
         return $api.get<OrderResponse>('/orders/all');
     }
+
+    static async placeOrder(obj: any): Promise<AxiosResponse<OrderResponse>> {
+        return $api.post<OrderResponse>('/orders/createOrder', obj)
+    }
 }
 
 export default OrderService;

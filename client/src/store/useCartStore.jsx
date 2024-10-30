@@ -29,6 +29,10 @@ const useCartStore = create((set) => ({
     deleteItem: (id) => set((state) => {
         const { [id]: _, ...remainingItems } = state.cart; // удаляем элемент
         return { cart: remainingItems };
+    }),
+
+    clearCart: () => set({
+        cart: {},
     })
 }))
 

@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import axios from 'axios';
 import OrderService from '../services/OrderService';
+import useCartStore from '../store/useCartStore';
 
 const options = {
     hour: 'numeric', minute: 'numeric', second: 'numeric',
@@ -39,17 +40,20 @@ const CheckOutPage = () => {
     const { data: orderNumber } = useQuery({
         queryKey: ['number'],
         queryFn: () => fetchOrders(),
-    })
+    });
+    const clearCart = useCartStore((state) => state.clearCart)
 
     const cartPrice = cartItems.reduce((accumulator, currentValue) => accumulator + (currentValue.price * currentValue.quantity), 0);
     const totalPrice = cartPrice + option.price
 
     async function placeOrder(obj) {
         console.log(obj)
-        const data = await axios.post('http://localhost:8080/orders/createOrder', obj);
+        // const data = await axios.post('http://localhost:8080/orders/createOrder', obj);
+        const data = await OrderService.placeOrder(obj);
         console.log(data)
         if (data.status == '200') {
-            navigate('/')
+            navigate('/');
+            clearCart();
         }
     }
 

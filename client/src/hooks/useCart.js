@@ -10,7 +10,9 @@ const useCart = () => {
         queryKey: ['products'],
         queryFn: () => fetchLatest()
     })
-    const { cart } = useCartStore();
+    // const { cart } = useCartStore();
+
+    const cart = useCartStore((state) => state.cart);
 
     const cartItems = products.filter((product) => cart.hasOwnProperty(product.product_id)).map(el => {
         const item = cart[el.product_id];
