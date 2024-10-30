@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Image from './Image';
 
 const ImageSlider = ({ prod }) => {
     const [index, setIndex] = useState(0);
@@ -18,7 +19,8 @@ const ImageSlider = ({ prod }) => {
                 >
                     {prod.images.map((el, ind) => {
                         return (
-                            <img onClick={() => setIndex(ind)} loading='lazy' src={el.image_url} key={el._id} alt="" className={index == ind ? 'object-cover rounded-md lg:w-[90px] w-[45px] border-2 border-blue-800' : 'object-cover rounded-md w-[45px] lg:w-[90px] border-2 border-transparent hover:cursor-pointer'} />
+                            <Image onClick={() => setIndex(ind)} img={el.image_url} key={el._id} />
+                            // <img onClick={() => setIndex(ind)} loading='lazy' src={el.image_url} key={el._id} alt="" className={index == ind ? 'object-cover rounded-md lg:w-[90px] w-[45px] border-2 border-blue-800' : 'object-cover rounded-md w-[45px] lg:w-[90px] border-2 border-transparent hover:cursor-pointer'} />
                     )})}
                 </div>
                 {/* {prod.images.map((el, ind) => (

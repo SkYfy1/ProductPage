@@ -6,13 +6,13 @@ const Order = ({ item, index }) => {
     return (
         <>
             <div className='flex justify-between p-2 my-4'>
-                <div className='flex gap-5'>
+                <div className='flex gap-5 w-1/3'>
                     <div>Заказ №{index + 1}</div>
                     <div>{item.date.slice(0, 21)}</div>
                     <div>{item.items.length} товар{item.items.length >= 2 && 'а/ов'}</div>
                 </div>
-                <div>Сумма: {item.totalPrice} $</div>
-                <button onClick={() => setShowMore(!showMore)}>{showMore ? 'Скрыть' : 'Подробнее'}</button>
+                <div className='w-1/6'>Сумма: {item.totalPrice} $</div>
+                <button className='w-1/6' onClick={() => setShowMore(!showMore)}>{showMore ? 'Скрыть' : 'Подробнее'}</button>
             </div>
             {showMore &&
                 <div className='flex justify-between border-y border-blue-300 px-5'>
