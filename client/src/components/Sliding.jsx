@@ -2,16 +2,16 @@ import React from 'react'
 import { animated, useSpring } from '@react-spring/web'
 
 const Sliding = () => {
-    const spring = useSpring({
+    const [spring, api ]= useSpring(() => ({
         from: { transform: 'translateX(0%)' },
         to: { transform: 'translateX(-100%)' },
         loop: true,
-        config: { duration: 5000 },
+        config: { duration: 12000 },
         reset: true
-    })
+    }))
     return (
         <>
-            <div className='w-full bg-blue-700 overflow-hidden py-1 rounded  mt-5'>
+            <div className='w-full bg-blue-700 overflow-hidden py-1 rounded  mt-5' onMouseEnter={() => api.pause()} onMouseLeave={() => api.resume()}>
                 {/* <animated.div style={{ ...spring }}>texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext</animated.div> */}
                 <div className="flex  text-white">
                     <animated.div style={{ ...spring }} className="flex-shrink-0 whitespace-nowrap">
