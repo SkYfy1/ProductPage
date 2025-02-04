@@ -6,8 +6,8 @@ const hashPassword = async (password) => {
         return hashed;
 };
 
-const hashedPass = await hashPassword('alexskyfy123');
+const hashedPass = await hashPassword('qwerty1');
 
-const compare = await bcrypt.compare('alexskyfy126', hashedPass)
+const compare = await bcrypt.compare('qwerty', hashedPass)
 
 export default hashPassword;
