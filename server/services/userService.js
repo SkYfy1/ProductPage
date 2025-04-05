@@ -49,7 +49,7 @@ class userService {
             throw ApiError.BadRequest('Not found account with this email')
         }
 
-        const isPassEquals = bcrypt.compare(password, user.password);
+        const isPassEquals = await bcrypt.compare(password, user.password);
 
 
         if (!isPassEquals) {
@@ -131,14 +131,14 @@ class userService {
         console.log(email)
 
         console.log(account)
-        
-        if(!account) {
+
+        if (!account) {
             throw ApiError.BadRequest('No registered users');
         }
 
         const isPassEquals = bcrypt.compare(password, account.password);
 
-        if(!isPassEquals) {
+        if (!isPassEquals) {
             throw ApiError.BadRequest('Type legit password');
         }
 
@@ -149,8 +149,8 @@ class userService {
         const account = await userModel.findOne({ email });
 
         console.log(account)
-        
-        if(!account) {
+
+        if (!account) {
             throw ApiError.BadRequest('No registered users');
         }
 

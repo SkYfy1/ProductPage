@@ -19,16 +19,16 @@ const port = process.env.PORT;
 // }
 
 app.use(cors({
-        credentials: true,
-        origin: 'http://localhost:5173'
-    }));
+    credentials: true,
+    origin: 'http://localhost:5173'
+}));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 mongoose.connect(url).then(() => {
     console.log("Database connected")
-}).catch(() => console.log("Not connected"))
+}).catch((error) => console.log(error))
 
 app.use('/', router);
 

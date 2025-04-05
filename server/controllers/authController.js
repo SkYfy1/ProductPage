@@ -90,9 +90,9 @@ const loginUser = async (req, res, next) => {
 
         const user = await uService.login(email, password);
 
-        console.log('User refreshToken:', user.refreshToken);
+        // console.log('User refreshToken:', user.refreshToken);
 
-        console.log(user)
+        // console.log(user)
 
         res.cookie('refreshToken', user.refreshToken, {
             maxAge: 30 * 24 * 60 * 60 * 1000,
@@ -157,7 +157,7 @@ const verify = async (req, res, next) => {
 
         const verified = await uService.verifyPassword(email, password);
 
-        if(verified) {
+        if (verified) {
             return res.json({ message: 'Verified' })
         }
 
@@ -175,7 +175,7 @@ const changePassword = async (req, res, next) => {
 
         const account = await uService.changePassword(email, password);
 
-        if(account) {
+        if (account) {
             return res.json({ message: 'Password changed' })
         }
 
