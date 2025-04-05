@@ -39,14 +39,18 @@ ___
 ## <h1 align="center">Main page</h1>
 ![localhost_5173_(fhd) (8)](https://github.com/user-attachments/assets/db39b753-a7db-460c-867b-222ff5114c04)
 
+
 ## <h1 align="center">Products page</h1>
 ![localhost_5173_(fhd) (10)](https://github.com/user-attachments/assets/6fdc6eae-b326-4be2-a5f9-ea4ec266a5b2)
+
 
 ## <h1 align="center">Collection page</h1>
 ![localhost_5173_(fhd) (11)](https://github.com/user-attachments/assets/ecdedcdd-0745-40b3-b2eb-93ead3ae964b)
 
+
 ## <h1 align="center">Product page</h1> 
-![localhost_5173_(fhd) (18)](https://github.com/user-attachments/assets/b8bce0b5-c34d-4106-817d-5227cd0af315)
+![localhost_5173_(fhd) (19)](https://github.com/user-attachments/assets/593a2c51-798e-4e0b-ab9f-d845d65f7cc4)
+
 
 ## <h1 align="center">Reviews</h1>
 ![localhost_5173_(fhd) (14)](https://github.com/user-attachments/assets/ff4c5d12-cb20-4a4e-81df-c0c71c8e7872)
@@ -54,7 +58,6 @@ ___
 
 ## <h1 align="center">Cart</h1>
 ![localhost_5173_(fhd) (16)](https://github.com/user-attachments/assets/fcd63235-26f7-4f2c-99e1-3edaa1079eb6)
-
 
 ## <h1 align="center">Checkout page</h1>
 ![localhost_5173_(fhd) (17)](https://github.com/user-attachments/assets/79f7eb35-4f11-46e4-8844-e66699f2ca2c)
